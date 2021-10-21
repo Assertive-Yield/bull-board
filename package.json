@@ -37,7 +37,7 @@
     "start:dev": "concurrently \"yarn start:dev:ui\" \"yarn start:dev:server\"",
     "test": "lerna run test",
     "clean": "lerna run clean",
-    "release": "release-it --only-version"
+    "release": "release-it"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
