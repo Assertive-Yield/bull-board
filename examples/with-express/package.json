@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@bull-board/express": "^3.0.0",
-    "bullmq": "^1.24.4",
+    "bullmq": "^1.50.5",
     "express": "^4.17.1"
   }
 }

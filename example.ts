@@ -1,6 +1,6 @@
 import * as Bull from 'bull';
 import Queue3 from 'bull';
-import { Queue as QueueMQ, QueueScheduler, Worker } from 'bullmq';
+import { delay, FlowProducer, Queue, Queue as QueueMQ, QueueScheduler, Worker } from 'bullmq';
 import express from 'express';
 import { BullMQAdapter } from '@bull-board/api/dist/src/queueAdapters/bullMQ';
 import { BullAdapter } from '@bull-board/api/dist/src/queueAdapters/bull';
@@ -21,7 +21,7 @@ const createQueueMQ = (name: string) => new QueueMQ(name, { connection: redisOpt
 function setupBullProcessor(bullQueue: Bull.Queue) {
   bullQueue.process(async (job) => {
     for (let i = 0; i <= 100; i++) {
-      await sleep(Math.random());
+      //   await sleep(Math.random());
       await job.progress(i);
       await job.log(`Processing job at interval ${i}`);
       if (Math.random() * 200 < 1) throw new Error(`Random error ${i}`);
@@ -38,15 +38,79 @@ async function setupBullMQProcessor(queueName: string) {
   await queueScheduler.waitUntilReady();
 
   new Worker(queueName, async (job) => {
-    for (let i = 0; i <= 100; i++) {
+    for (let i = 0; i <= 10; i++) {
       await sleep(Math.random());
       await job.updateProgress(i);
       await job.log(`Processing job at interval ${i}`);
 
-      if (Math.random() * 200 < 1) throw new Error(`Random error ${i}`);
+      //   if (Math.random() * 200 < 1) throw new Error(`Random error ${i}`);
     }
 
     return { jobId: `This is the return value of job (${job.id})` };
+  });
+
+  const flowProducer = new FlowProducer();
+  const queue = new Queue(queueName);
+
+  await flowProducer.add({
+    queueName,
+    name: 'tue',
+    opts: {
+      jobId: 'tue',
+    },
+    children: [
+      {
+        name: 'mon',
+        queueName,
+        opts: {
+          jobId: 'mon',
+        },
+      },
+    ],
+  });
+  await delay(100);
+
+  // console.log: working... mon
+  // console.log: working... tue
+
+  // wed will never run because tue has finished
+  await flowProducer.add({
+    queueName,
+    name: 'wed',
+    opts: {
+      jobId: 'wed',
+    },
+    children: [
+      {
+        name: 'tue',
+        queueName,
+        opts: {
+          jobId: 'tue',
+        },
+      },
+    ],
+  });
+
+  // after removing tue, wed won't run
+  await queue.remove('tue');
+  await delay(100);
+
+  // any job that depends on wed won't run either
+  await flowProducer.add({
+    queueName,
+    name: 'thu',
+    opts: {
+      jobId: 'thu',
+    },
+    children: [
+      {
+        name: 'wed',
+        queueName,
+        opts: {
+          jobId: 'wed',
+        },
+      },
+    ],
   });
 }
 
