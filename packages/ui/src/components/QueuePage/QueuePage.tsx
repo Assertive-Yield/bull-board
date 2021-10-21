@@ -4,7 +4,7 @@ import { JobCard } from '../JobCard/JobCard';
 import { QueueActions } from '../QueueActions/QueueActions';
 import { StatusMenu } from '../StatusMenu/StatusMenu';
 import s from './QueuePage.module.css';
-import { AppQueue } from '@bull-board/api/typings/app';
+import { AppQueue } from '@bull-board-ay/api/typings/app';
 import { Pagination } from '../Pagination/Pagination';
 
 export const QueuePage = ({

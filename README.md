@@ -57,10 +57,10 @@ npm i @bull-board/koa
 const express = require('express')
 const Queue = require('bull')
 const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@bull-board/api')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter')
-const { ExpressAdapter } = require('@bull-board/express')
+const { createBullBoard } = require('@bull-board-ay/api')
+const { BullAdapter } = require('@bull-board-ay/api/bullAdapter')
+const { BullMQAdapter } = require('@bull-board-ay/api/bullMQAdapter')
+const { ExpressAdapter } = require('@bull-board-ay/express')
 
 const someQueue = new Queue('someQueueName')
 const someOtherQueue = new Queue('someOtherQueueName')
@@ -101,9 +101,9 @@ Makes the UI as read only, hides all queue & job related actions
 ```js
 const Queue = require('bull')
 const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@bull-board/api')
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
+const { createBullBoard } = require('@bull-board-ay/api')
+const { BullMQAdapter } = require('@bull-board-ay/api/bullMQAdapter')
+const { BullAdapter } = require('@bull-board-ay/api/bullAdapter')
 
 const someQueue = new Queue()
 const someOtherQueue = new Queue()
@@ -124,9 +124,9 @@ If you host your express service on a different path than root (/) ie. https://<
 
 ```js
 const Queue = require('bull')
-const { createBullBoard } = require('@bull-board/api')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
-const { ExpressAdapter } = require('@bull-board/express')
+const { createBullBoard } = require('@bull-board-ay/api')
+const { BullAdapter } = require('@bull-board-ay/api/bullAdapter')
+const { ExpressAdapter } = require('@bull-board-ay/express')
 
 const someQueue = new Queue('someQueueName')
 

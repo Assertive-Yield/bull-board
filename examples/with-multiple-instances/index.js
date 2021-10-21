@@ -1,6 +1,6 @@
-const { createBullBoard } = require('@bull-board/api');
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
-const { ExpressAdapter } = require('@bull-board/express');
+const { createBullBoard } = require('@bull-board-ay/api');
+const { BullMQAdapter } = require('@bull-board-ay/api/bullMQAdapter');
+const { ExpressAdapter } = require('@bull-board-ay/express');
 const { Queue: QueueMQ, Worker, QueueScheduler } = require('bullmq');
 const express = require('express');
 
@@ -82,12 +82,8 @@ const run = async () => {
 
   app.listen(3000, () => {
     console.log('Running on 3000...');
-    console.log(
-      'For the UI of instance1, open http://localhost:3000/instance1'
-    );
-    console.log(
-      'For the UI of instance2, open http://localhost:3000/instance2'
-    );
+    console.log('For the UI of instance1, open http://localhost:3000/instance1');
+    console.log('For the UI of instance2, open http://localhost:3000/instance2');
     console.log('Make sure Redis is running on port 6379 by default');
     console.log('To populate the queue, run:');
     console.log('  curl http://localhost:3000/add?title=Example');

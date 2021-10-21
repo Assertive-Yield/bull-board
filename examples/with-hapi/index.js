@@ -1,6 +1,6 @@
-const { createBullBoard } = require('@bull-board/api');
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
-const { HapiAdapter } = require('@bull-board/hapi');
+const { createBullBoard } = require('@bull-board-ay/api');
+const { BullMQAdapter } = require('@bull-board-ay/api/bullMQAdapter');
+const { HapiAdapter } = require('@bull-board-ay/hapi');
 const { Queue: QueueMQ, Worker, QueueScheduler } = require('bullmq');
 const Hapi = require('@hapi/hapi');
 

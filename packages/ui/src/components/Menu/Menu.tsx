@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { AppQueue } from '@bull-board/api/typings/app';
+import { AppQueue } from '@bull-board-ay/api/typings/app';
 import { NavLink } from 'react-router-dom';
 import { STATUS_LIST } from '../../constants/status-list';
 import { SearchIcon } from '../Icons/Search';

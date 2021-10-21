@@ -1,5 +1,5 @@
-import { AppJob } from '@bull-board/api/typings/app';
-import { GetQueuesResponse } from '@bull-board/api/typings/responses';
+import { AppJob } from '@bull-board-ay/api/typings/app';
+import { GetQueuesResponse } from '@bull-board-ay/api/typings/responses';
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { SelectedStatuses } from '../../typings/app';
@@ -39,19 +39,27 @@ export class Api {
   }
 
   public cleanJob(queueName: string, jobId: AppJob['id']): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/clean`);
+    return this.axios.put(
+      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/clean`
+    );
   }
 
   public retryJob(queueName: string, jobId: AppJob['id']): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/retry`);
+    return this.axios.put(
+      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/retry`
+    );
   }
 
   public promoteJob(queueName: string, jobId: AppJob['id']): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/promote`);
+    return this.axios.put(
+      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/promote`
+    );
   }
 
   public getJobLogs(queueName: string, jobId: AppJob['id']): Promise<string[]> {
-    return this.axios.get(`/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/logs`);
+    return this.axios.get(
+      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/logs`
+    );
   }
 
   public pauseQueue(queueName: string) {

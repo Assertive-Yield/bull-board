@@ -4,7 +4,7 @@ import {
   BullBoardQueues,
   ControllerHandlerReturnType,
   IServerAdapter,
-} from '@bull-board/api/dist/typings/app';
+} from '@bull-board-ay/api/dist/typings/app';
 import { FastifyInstance } from 'fastify';
 import pointOfView from 'point-of-view';
 

@@ -1,6 +1,6 @@
-const { createBullBoard } = require('@bull-board/api');
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
-const { ExpressAdapter } = require('@bull-board/express');
+const { createBullBoard } = require('@bull-board-ay/api');
+const { BullMQAdapter } = require('@bull-board-ay/api/bullMQAdapter');
+const { ExpressAdapter } = require('@bull-board-ay/express');
 const { Queue: QueueMQ, Worker, QueueScheduler } = require('bullmq');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -120,11 +120,7 @@ const run = async () => {
     });
   });
 
-  app.use(
-    '/ui',
-    ensureLoggedIn({ redirectTo: '/ui/login' }),
-    serverAdapter.getRouter()
-  );
+  app.use('/ui', ensureLoggedIn({ redirectTo: '/ui/login' }), serverAdapter.getRouter());
 
   app.listen(3000, () => {
     console.log('Running on 3000...');
