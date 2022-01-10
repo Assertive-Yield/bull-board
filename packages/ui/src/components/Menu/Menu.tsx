@@ -38,7 +38,7 @@ export const Menu = ({
           <ul className={s.menu}>
             {queues
               .filter(({ name }) => name.includes(searchTerm))
-              .map(({ name: queueName, isPaused }) => (
+              .map(({ name: queueName, isPaused, counts }) => (
                 <li key={queueName}>
                   <NavLink
                     to={`/queue/${encodeURIComponent(queueName)}${
@@ -49,7 +49,19 @@ export const Menu = ({
                     activeClassName={s.active}
                     title={queueName}
                   >
-                    {queueName} {isPaused && <span className={s.isPaused}>[ Paused ]</span>}
+                    <div className={s.name}>
+                      {queueName} {isPaused && <span className={s.isPaused}>[ Paused ]</span>}
+                    </div>
+                    <div className={s.stat}>
+                      <div className={s.statItem} title="Waiting">
+                        <span className={s.statIcon}>⚪</span>
+                        {counts.waiting + (counts['waiting-children'] ?? 0)}
+                      </div>
+                      <div className={s.statItem} title="Failed">
+                        <span className={s.statIcon}>🔴</span>
+                        {counts.failed}
+                      </div>
+                    </div>
                   </NavLink>
                 </li>
               ))}
