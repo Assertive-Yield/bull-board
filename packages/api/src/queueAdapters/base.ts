@@ -1,4 +1,5 @@
 import {
+  FormatterField,
   JobCleanStatus,
   JobCounts,
   JobStatus,
@@ -9,20 +10,24 @@ import {
 export abstract class BaseAdapter {
   public readonly readOnlyMode: boolean;
   public readonly prefix: string;
-  private formatters: Record<string, (data: any) => any> = {};
+  private formatters = new Map<FormatterField, (data: any) => any>();
 
   protected constructor(options: Partial<QueueAdapterOptions> = {}) {
     this.readOnlyMode = options.readOnlyMode === true;
     this.prefix = options.prefix || '';
   }
 
-  public setFormatter(field: 'data' | 'returnValue', formatter: (data: any) => any): void {
-    this.formatters[field] = formatter;
+  public setFormatter<T extends FormatterField>(
+    field: T,
+    formatter: (data: any) => T extends 'name' ? string : any
+  ): void {
+    this.formatters.set(field, formatter);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public format(field: 'data' | 'returnValue', data: any): any {
-    return typeof this.formatters[field] === 'function' ? this.formatters[field](data) : data;
+  public format(field: FormatterField, data: any, defaultValue = data): any {
+    const fieldFormatter = this.formatters.get(field);
+    return typeof fieldFormatter === 'function' ? fieldFormatter(data) : defaultValue;
   }
 
   public abstract clean(queueStatus: JobCleanStatus, graceTimeMs: number): Promise<void>;
@@ -42,7 +47,10 @@ export abstract class BaseAdapter {
   public abstract getName(): string;
 
   public abstract getRedisInfo(): Promise<string>;
+
   public abstract isPaused(): Promise<boolean>;
+
   public abstract pause(): Promise<void>;
+
   public abstract resume(): Promise<void>;
 }
