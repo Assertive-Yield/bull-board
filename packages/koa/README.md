@@ -1,10 +1,10 @@
-# <img alt="@bull-board" src="https://raw.githubusercontent.com/felixmosh/bull-board/master/packages/ui/src/static/images/logo.svg" width="35px" /> @bull-board/koa 
+# <img alt="@ay-bull-board" src="https://raw.githubusercontent.com/felixmosh/bull-board/master/packages/ui/src/static/images/logo.svg" width="35px" /> @ay-bull-board/koa
 
 [Koa.js](https://koajs.com/) server adapter for `bull-board`.
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@bull-board/koa">
-    <img alt="npm version" src="https://img.shields.io/npm/v/@bull-board/koa">
+  <a href="https://www.npmjs.com/package/@ay-bull-board/koa">
+    <img alt="npm version" src="https://img.shields.io/npm/v/@ay-bull-board/koa">
   </a>
   <a href="https://www.npmjs.com/package/bull-board">
     <img alt="npm downloads" src="https://img.shields.io/npm/dw/bull-board">
@@ -18,6 +18,7 @@
 ![Fails](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/fails.png)
 
 # Usage examples
+
 1. [Simple koa setup](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
 
 For more info visit the main [README](https://github.com/felixmosh/bull-board#readme)

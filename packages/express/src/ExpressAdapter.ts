@@ -7,7 +7,7 @@ import {
   ControllerHandlerReturnType,
   HTTPMethod,
   IServerAdapter,
-} from '@bull-board/api/dist/typings/app';
+} from '@ay-bull-board/api/dist/typings/app';
 import { wrapAsync } from './helpers/wrapAsync';
 
 export class ExpressAdapter implements IServerAdapter {

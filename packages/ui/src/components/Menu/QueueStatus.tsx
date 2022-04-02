@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Status } from '@bull-board/api/typings/app';
+import { Status } from '@ay-bull-board/api/typings/app';
 import s from './QueueStatus.module.css';
 
 const formatSmallNumber = (i: number) => {

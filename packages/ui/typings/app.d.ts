@@ -1,6 +1,6 @@
-import { AppJob, AppQueue, Status } from '@bull-board/api/typings/app';
+import { AppJob, AppQueue, Status } from '@ay-bull-board/api/typings/app';
 
-export { Status } from '@bull-board/api/typings/app';
+export { Status } from '@ay-bull-board/api/typings/app';
 
 export type SelectedStatuses = Record<AppQueue['name'], Status>;
 

@@ -2,30 +2,30 @@
 # yarn lockfile v1
 
 
-"@bull-board/api@3.9.0":
+"@ay-bull-board/api@3.9.0":
   version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/api/-/api-3.9.0.tgz#5bd22fc2147b2f23637276c9aee2c8fb78f17e82"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/api/-/api-3.9.0.tgz#5bd22fc2147b2f23637276c9aee2c8fb78f17e82"
   integrity sha512-ylMC0BghnTW8+eM5m0Q4o1PO5RCVWfhs9jgeb/4THHVeuSothXh5pWS7uJGafiy6vvczUaJsoUrS3a/sttHlBw==
   dependencies:
     redis-info "^3.0.8"
 
-"@bull-board/fastify@^3.9.0":
+"@ay-bull-board/fastify@^3.9.0":
   version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/fastify/-/fastify-3.9.0.tgz#317392920b5857833ebf292917dd91fab4231eef"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/fastify/-/fastify-3.9.0.tgz#317392920b5857833ebf292917dd91fab4231eef"
   integrity sha512-sSXoltc8M0gqOgL1YXphWE3530mxXpdjLeMi7pXZX38K2lwxRsjk9grde1HbX4xdMmSm/LS7MvOFsNyZTAh3Sg==
   dependencies:
-    "@bull-board/api" "3.9.0"
-    "@bull-board/ui" "3.9.0"
+    "@ay-bull-board/api" "3.9.0"
+    "@ay-bull-board/ui" "3.9.0"
     ejs "^3.1.6"
     fastify-static "^4.2.2"
     point-of-view "^4.14.0"
 
-"@bull-board/ui@3.9.0":
+"@ay-bull-board/ui@3.9.0":
   version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/ui/-/ui-3.9.0.tgz#0fdb8e717468cf9b6daf3214d2af7f659b52979d"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/ui/-/ui-3.9.0.tgz#0fdb8e717468cf9b6daf3214d2af7f659b52979d"
   integrity sha512-hPwWwSAf+jEhaJIugtK8ga9yE/A1QwWkPm3MA65ykekZVpDKg8bikcYa9YTFw9LwhzWQwW7MEN1prJyge7PQgQ==
   dependencies:
-    "@bull-board/api" "3.9.0"
+    "@ay-bull-board/api" "3.9.0"
 
 "@fastify/ajv-compiler@^1.0.0":
   version "1.1.0"

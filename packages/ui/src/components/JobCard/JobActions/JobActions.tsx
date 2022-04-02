@@ -5,8 +5,8 @@ import { TrashIcon } from '../../Icons/Trash';
 import { Tooltip } from '../../Tooltip/Tooltip';
 import { Button } from '../Button/Button';
 import s from './JobActions.module.css';
-import { Status } from '@bull-board/api/typings/app';
-import { STATUSES } from '@bull-board/api/src/constants/statuses';
+import { Status } from '@ay-bull-board/api/typings/app';
+import { STATUSES } from '@ay-bull-board/api/src/constants/statuses';
 
 interface JobActionsProps {
   status: Status;

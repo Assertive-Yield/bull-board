@@ -2,29 +2,29 @@
 # yarn lockfile v1
 
 
-"@bull-board/api@3.0.0":
+"@ay-bull-board/api@3.0.0":
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/api/-/api-3.0.0.tgz#a958b770a16ba1df0e66a00ef5da627789d6b0a4"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/api/-/api-3.0.0.tgz#a958b770a16ba1df0e66a00ef5da627789d6b0a4"
   integrity sha512-drbTpnLzUGhImEEwHmjz0a+a861Oldr5c72jI2cl112S2TcfNWMKuN5mkkaBtPtEh/TGEfdGd5YS/Q8+ALo44g==
   dependencies:
     redis-info "^3.0.8"
 
-"@bull-board/express@^3.0.0":
+"@ay-bull-board/express@^3.0.0":
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/express/-/express-3.0.0.tgz#8f42fe4a89ecc33ed5485a3ef09f8ace8220232d"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/express/-/express-3.0.0.tgz#8f42fe4a89ecc33ed5485a3ef09f8ace8220232d"
   integrity sha512-QdfANQ/EtuV8OEUk8VIj2WlXLRpzxR48wMFycJ7hvKJa3A/enewM9598vyFCHXlFO+0Fi6xp1Er+tnQb2dOzDQ==
   dependencies:
-    "@bull-board/api" "3.0.0"
-    "@bull-board/ui" "3.0.0"
+    "@ay-bull-board/api" "3.0.0"
+    "@ay-bull-board/ui" "3.0.0"
     ejs "3.1.6"
     express "4.17.1"
 
-"@bull-board/ui@3.0.0":
+"@ay-bull-board/ui@3.0.0":
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@bull-board/ui/-/ui-3.0.0.tgz#1c1ebe67cf7e83cba1d45783a75922bee3b4b09b"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/ui/-/ui-3.0.0.tgz#1c1ebe67cf7e83cba1d45783a75922bee3b4b09b"
   integrity sha512-FtlrQZq0wmxNX5K8e0XspsU5CrHeP7LixhbPTHC5d4WWwBKrnPzV3GTWoGSZ44ClNrWHH2kRg4/eUB3QuaGUrg==
   dependencies:
-    "@bull-board/api" "3.0.0"
+    "@ay-bull-board/api" "3.0.0"
 
 "@types/ioredis@^4.22.2":
   version "4.26.1"

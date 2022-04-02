@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './QueueStats.module.css';
-import { AppQueue, QueueStats } from '@bull-board/api/typings/app';
+import { AppQueue, QueueStats } from '@ay-bull-board/api/typings/app';
 import { formatDistance } from 'date-fns/esm';
 
 const milliSecToTime = (milliSec: number) => {

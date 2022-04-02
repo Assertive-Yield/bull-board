@@ -1,4 +1,4 @@
-# <img alt="@bull-board" src="https://raw.githubusercontent.com/felixmosh/bull-board/master/packages/ui/src/static/images/logo.svg" width="35px" /> @bull-board
+# <img alt="@ay-bull-board" src="https://raw.githubusercontent.com/felixmosh/bull-board/master/packages/ui/src/static/images/logo.svg" width="35px" /> @ay-bull-board
 
 Bull Dashboard is a UI built on top of [Bull](https://github.com/OptimalBits/bull) or [BullMQ](https://github.com/taskforcesh/bullmq) to help you visualize your queues and their jobs.
 With this library you get a beautiful UI for visualizing what's happening with each job in your queues, their status and some actions that will enable you to get the job done.
@@ -32,54 +32,52 @@ If you want to learn more about queues ([Bull](https://github.com/OptimalBits/bu
 To add it to your project start by installing a server framework specific adapter to your dependencies list:
 
 ```sh
-yarn add @bull-board/express
+yarn add @ay-bull-board/express
 # or
-yarn add @bull-board/fastify
+yarn add @ay-bull-board/fastify
 # or
-yarn add @bull-board/hapi
+yarn add @ay-bull-board/hapi
 # or
-yarn add @bull-board/koa
+yarn add @ay-bull-board/koa
 ```
+
 Or
+
 ```sh
-npm i @bull-board/express
+npm i @ay-bull-board/express
 # or
-npm i @bull-board/fastify
+npm i @ay-bull-board/fastify
 # or
-npm i @bull-board/hapi
+npm i @ay-bull-board/hapi
 # or
-npm i @bull-board/koa
+npm i @ay-bull-board/koa
 ```
 
 ## Hello World
 
 ```js
-const express = require('express')
-const Queue = require('bull')
-const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@bull-board/api')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter')
-const { ExpressAdapter } = require('@bull-board/express')
+const express = require('express');
+const Queue = require('bull');
+const QueueMQ = require('bullmq');
+const { createBullBoard } = require('@ay-bull-board/api');
+const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
+const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
+const { ExpressAdapter } = require('@ay-bull-board/express');
 
-const someQueue = new Queue('someQueueName')
-const someOtherQueue = new Queue('someOtherQueueName')
-const queueMQ = new QueueMQ('queueMQName')
+const someQueue = new Queue('someQueueName');
+const someOtherQueue = new Queue('someOtherQueueName');
+const queueMQ = new QueueMQ('queueMQName');
 
 const serverAdapter = new ExpressAdapter();
 
 const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
-  queues: [
-    new BullAdapter(someQueue),
-    new BullAdapter(someOtherQueue),
-    new BullMQAdapter(queueMQ),
-  ],
-  serverAdapter:serverAdapter
-})
+  queues: [new BullAdapter(someQueue), new BullAdapter(someOtherQueue), new BullMQAdapter(queueMQ)],
+  serverAdapter: serverAdapter,
+});
 
-const app = express()
+const app = express();
 
-serverAdapter.setBasePath('/admin/queues')
+serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // other configurations of your server
@@ -87,45 +85,47 @@ app.use('/admin/queues', serverAdapter.getRouter());
 
 That's it! Now you can access the `/admin/queues` route, and you will be able to monitor everything that is happening in your queues 😁
 
-
 For more advanced usages check the `examples` folder, currently it contains:
+
 1. [Basic authentication example](https://github.com/felixmosh/bull-board/tree/master/examples/with-express-auth)
 2. [Multiple instance of the board](https://github.com/felixmosh/bull-board/tree/master/examples/with-multiple-instances)
-2. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
-2. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
-2. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
+3. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
+4. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
+5. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
+
 ### Queue options
+
 1. `readOnlyMode` (default: `false`)
-Makes the UI as read only, hides all queue & job related actions
+   Makes the UI as read only, hides all queue & job related actions
 
 ```js
-const Queue = require('bull')
-const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@bull-board/api')
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
+const Queue = require('bull');
+const QueueMQ = require('bullmq');
+const { createBullBoard } = require('@ay-bull-board/api');
+const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
+const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
 
-const someQueue = new Queue()
-const someOtherQueue = new Queue()
-const queueMQ = new QueueMQ()
+const someQueue = new Queue();
+const someOtherQueue = new Queue();
+const queueMQ = new QueueMQ();
 
 const { setQueues, replaceQueues } = createBullBoard({
   queues: [
     new BullAdapter(someQueue, { readOnlyMode: true }), // only this queue will be in read only mode
     new BullAdapter(someOtherQueue),
     new BullMQAdapter(queueMQ, { readOnlyMode: true }),
-  ]
-})
+  ],
+});
 ```
 
 2. `allowRetries` (default: `true`)
-When set to `false` the UI removes the job retry buttons for a queue. This option will be ignored if `readOnlyMode` is `true`.
+   When set to `false` the UI removes the job retry buttons for a queue. This option will be ignored if `readOnlyMode` is `true`.
 
 ```js
 const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@bull-board/api')
-const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
+const { createBullBoard } = require('@ay-bull-board/api')
+const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter')
+const { BullAdapter } = require('@ay-bull-board/api/bullAdapter')
 
 const someQueue = new Queue()
 const someOtherQueue = new Queue()
@@ -133,7 +133,7 @@ const queueMQ = new QueueMQ()
 
 const { setQueues, replaceQueues } = createBullBoard({
   queues: [
-    new BullAdapter(someQueue), 
+    new BullAdapter(someQueue),
     new BullAdapter(someOtherQueue, , { allowRetries: false }), // No retry buttons
     new BullMQAdapter(queueMQ, { allowRetries: true, readOnlyMode: true }), // allowRetries will be ignored in this case in lieu of readOnlyMode
   ]
@@ -145,26 +145,24 @@ const { setQueues, replaceQueues } = createBullBoard({
 If you host your express service on a different path than root (/) ie. https://<server_name>/<sub_path>/, then you can add the following code to provide the configuration to the bull-board router. In this example the sub path will be `my-base-path`.
 
 ```js
-const Queue = require('bull')
-const { createBullBoard } = require('@bull-board/api')
-const { BullAdapter } = require('@bull-board/api/bullAdapter')
-const { ExpressAdapter } = require('@bull-board/express')
+const Queue = require('bull');
+const { createBullBoard } = require('@ay-bull-board/api');
+const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
+const { ExpressAdapter } = require('@ay-bull-board/express');
 
-const someQueue = new Queue('someQueueName')
+const someQueue = new Queue('someQueueName');
 
 const serverAdapter = new ExpressAdapter();
 
 createBullBoard({
-  queues: [
-    new BullAdapter(someQueue),
-  ],
-  serverAdapter 
-})
+  queues: [new BullAdapter(someQueue)],
+  serverAdapter,
+});
 
 // ... express server configuration
 
 const basePath = 'my-base-path';
-serverAdapter.setBasePath(basePath)
+serverAdapter.setBasePath(basePath);
 
 app.use('/queues', serverAdapter.getRouter());
 ```

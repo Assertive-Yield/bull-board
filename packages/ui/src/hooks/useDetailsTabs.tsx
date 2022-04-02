@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Status } from '@bull-board/api/typings/app';
-import { STATUSES } from '@bull-board/api/src/constants/statuses';
+import { Status } from '@ay-bull-board/api/typings/app';
+import { STATUSES } from '@ay-bull-board/api/src/constants/statuses';
 
 const regularItems = ['Data', 'Options', 'Logs'] as const;
 
