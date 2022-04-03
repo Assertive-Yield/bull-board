@@ -75,7 +75,7 @@ const allStatuses: JobStatus[] = [
   STATUSES.paused,
   STATUSES.waiting,
 ];
-const JOB_PER_PAGE = 50;
+const JOB_PER_PAGE = 10;
 
 function getPagination(statuses: JobStatus[], counts: JobCounts, currentPage: number): Pagination {
   const isLatestStatus = statuses.length > 1;
