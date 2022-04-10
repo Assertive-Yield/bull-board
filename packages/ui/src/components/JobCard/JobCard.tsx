@@ -31,7 +31,7 @@ export const JobCard = ({ job, status, actions, readOnlyMode, allowRetries }: Jo
     <div className={s.contentWrapper}>
       <div className={s.title}>
         <h4>
-          {job.name}
+          {job.name.toString()}
           {job.attempts > 1 && <span>attempt #{job.attempts}</span>}
           {!!job.opts?.repeat?.count && (
             <span>
