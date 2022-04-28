@@ -15,12 +15,14 @@ export class Api {
     activeQueue,
     status,
     page,
+    search,
   }: {
     activeQueue?: string;
     status?: Status;
     page: string;
+    search?: string;
   }): Promise<GetQueuesResponse> {
-    return this.axios.get(`/queues`, { params: { activeQueue, status, page } });
+    return this.axios.get(`/queues`, { params: { activeQueue, status, page, search } });
   }
 
   public retryAll(queueName: string): Promise<void> {

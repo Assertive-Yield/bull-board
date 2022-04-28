@@ -49,6 +49,28 @@ export class BullAdapter extends BaseAdapter {
     );
   }
 
+  // NOT IMPLEMENTED
+  public async getJobsSearch(
+    jobStatuses: JobStatus[],
+    start?: number,
+    end?: number,
+    search?: string
+  ): Promise<Job[]> {
+    if (!search) return this.getJobs(jobStatuses, start, end);
+
+    return this.queue.getJobs(jobStatuses, 0, -1).then((jobs) =>
+      jobs
+        .filter((job) => job.name.includes(search))
+        .slice(start, end)
+        .map((job) => {
+          if (typeof job?.attemptsMade === 'number') {
+            job.attemptsMade++; // increase to align it with bullMQ behavior
+          }
+          return job;
+        })
+    );
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getJobCounts(..._jobStatuses: JobStatus[]): Promise<JobCounts> {
     return this.queue.getJobCounts() as unknown as Promise<JobCounts>;

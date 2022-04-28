@@ -49,6 +49,13 @@ export abstract class BaseAdapter {
     end?: number
   ): Promise<QueueJob[]>;
 
+  public abstract getJobsSearch(
+    jobStatuses: JobStatus[],
+    start?: number,
+    end?: number,
+    search?: string
+  ): Promise<QueueJob[]>;
+
   public abstract getJobLogs(id: string): Promise<string[]>;
 
   public abstract getName(): string;

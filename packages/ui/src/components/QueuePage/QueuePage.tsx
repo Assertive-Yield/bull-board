@@ -6,7 +6,8 @@ import { StatusMenu } from '../StatusMenu/StatusMenu';
 import s from './QueuePage.module.css';
 import { AppQueue } from '@ay-bull-board/api/typings/app';
 import { Pagination } from '../Pagination/Pagination';
-import { QueueStatsCard } from './QueueStats';
+import { QueueStatsCard } from '../QueueStats/QueueStats';
+import { QueueSearch } from '../QueueSearch/QueueSearch';
 
 export const QueuePage = ({
   selectedStatus,
@@ -26,7 +27,8 @@ export const QueuePage = ({
       <div className={s.stickyHeader}>
         <StatusMenu queue={queue} actions={actions} />
         <div className={s.actionContainer}>
-          <div>
+          <div className={s.flex}>
+            <QueueSearch />
             {queue.jobs.length > 0 && !queue.readOnlyMode && (
               <QueueActions
                 queue={queue}

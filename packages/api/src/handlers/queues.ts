@@ -146,13 +146,14 @@ async function getAppQueues(
       const status =
         !isActiveQueue || query.status === 'latest' ? allStatuses : [query.status as JobStatus];
       const currentPage = +query.page || 1;
+      const search = query.search || '';
 
       const counts = await queue.getJobCounts(...allStatuses);
       const isPaused = await queue.isPaused();
 
       const pagination = getPagination(status, counts, currentPage);
       const jobs = isActiveQueue
-        ? await queue.getJobs(status, pagination.range.start, pagination.range.end)
+        ? await queue.getJobsSearch(status, pagination.range.start, pagination.range.end, search)
         : [];
       const jobsJson = jobs.filter(Boolean).map((job) => formatJob(job, queue));
 

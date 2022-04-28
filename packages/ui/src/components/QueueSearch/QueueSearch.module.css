@@ -1,0 +1,8 @@
+.search {
+  background-color: #fff;
+  box-shadow: 0 1px 1px 0 rgb(60 75 100 / 14%), 0 2px 1px -1px rgb(60 75 100 / 12%),
+    0 1px 3px 0 rgb(60 75 100 / 20%);
+  border-radius: 0.25rem;
+  padding: 0.6rem;
+  border: 0;
+}

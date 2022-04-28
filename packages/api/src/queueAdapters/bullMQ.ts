@@ -38,6 +38,24 @@ export class BullMQAdapter extends BaseAdapter {
     return this.queue.getJobs(jobStatuses, start, end);
   }
 
+  public async getJobsSearch(
+    jobStatuses: JobStatus[],
+    start?: number,
+    end?: number,
+    search?: string
+  ): Promise<Job[]> {
+    if (!search) {
+      return this.getJobs(jobStatuses, start, end);
+    }
+    const jobIds = await this.queue.getRanges(jobStatuses, 0, -1);
+    return Promise.all(
+      jobIds
+        .filter((jobId) => !jobId.includes(search))
+        .slice(start, end)
+        .map((jobId) => this.getJob(jobId) as Promise<Job>)
+    );
+  }
+
   public getJobCounts(...jobStatuses: JobStatus[]): Promise<JobCounts> {
     return this.queue.getJobCounts(...jobStatuses) as unknown as Promise<JobCounts>;
   }

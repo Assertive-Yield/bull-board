@@ -42,6 +42,7 @@ export const useStore = (api: Api): Store => {
         activeQueue,
         status: activeQueue ? selectedStatuses[activeQueue] : undefined,
         page: query.get('page') || '1',
+        search: query.get('search') || '',
       })
       .then((data) => {
         setState({ data, loading: false });
