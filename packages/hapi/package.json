@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/hapi",
-  "version": "3.10.2-ayFork-1.0.6",
+  "version": "3.10.2-ayFork-1.0.7",
   "description": "Hapi.js server adapter for Bull-Board package",
   "keywords": [
     "bull",
@@ -29,8 +29,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ay-bull-board/api": "3.10.2-ayFork-1.0.6",
-    "@ay-bull-board/ui": "3.10.2-ayFork-1.0.6",
+    "@ay-bull-board/api": "3.10.2-ayFork-1.0.7",
+    "@ay-bull-board/ui": "3.10.2-ayFork-1.0.7",
     "@hapi/inert": "^6.0.5",
     "@hapi/vision": "^6.1.0",
     "ejs": "^3.1.6"
