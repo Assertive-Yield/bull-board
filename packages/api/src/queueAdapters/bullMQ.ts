@@ -50,7 +50,7 @@ export class BullMQAdapter extends BaseAdapter {
     const jobIds = await this.queue.getRanges(jobStatuses, 0, -1);
     return Promise.all(
       jobIds
-        .filter((jobId) => !jobId.includes(search))
+        .filter((jobId) => jobId.includes(search))
         .slice(start, end)
         .map((jobId) => this.getJob(jobId) as Promise<Job>)
     );
