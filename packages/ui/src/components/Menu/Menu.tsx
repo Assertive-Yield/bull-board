@@ -38,7 +38,7 @@ export const Menu = ({
         {!!queues && (
           <ul className={s.menu}>
             {queues
-              .filter(({ name }) => name.includes(searchTerm))
+              .filter(({ name }) => name.toLowerCase().includes(searchTerm.toLowerCase()))
               .map(({ name: queueName, isPaused, counts }) => (
                 <li key={queueName} className={s.navLi}>
                   <QueueStatus counts={counts} />
