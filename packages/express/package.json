@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/express",
-  "version": "4.2.2-ayFork-1.0.8",
+  "version": "4.2.2-ayFork-1.0.9",
   "description": "Express.js server adapter for Bull-Board package",
   "keywords": [
     "bull",
@@ -28,8 +28,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ay-bull-board/api": "4.2.2-ayFork-1.0.8",
-    "@ay-bull-board/ui": "4.2.2-ayFork-1.0.8",
+    "@ay-bull-board/api": "4.2.2-ayFork-1.0.9",
+    "@ay-bull-board/ui": "4.2.2-ayFork-1.0.9",
     "ejs": "3.1.7",
     "express": "4.17.3"
   },
