@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/ui",
-  "version": "4.2.2-ayFork-1.0.10",
+  "version": "4.2.2-ayFork-1.0.11",
   "description": "Bull-Board's UI package",
   "keywords": [
     "bull",
@@ -27,7 +27,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ay-bull-board/api": "4.2.2-ayFork-1.0.10",
+    "@ay-bull-board/api": "4.2.2-ayFork-1.0.11",
     "simplebar-react": "^2.3.6"
   },
   "devDependencies": {
