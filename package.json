@@ -78,6 +78,7 @@
   "release-it": {
     "plugins": {
       "release-it-yarn-workspaces": {
+        "publish": true,
         "skipChecks": true
       }
     },
