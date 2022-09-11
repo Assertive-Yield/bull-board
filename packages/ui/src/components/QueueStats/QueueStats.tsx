@@ -1,8 +1,7 @@
 import React from 'react';
 import s from './QueueStats.module.css';
-import { AppQueue, QueueStats, Status } from '@ay-bull-board/api/typings/app';
+import { AppQueue, QueueStats } from '@ay-bull-board/api/typings/app';
 import { formatDistance } from 'date-fns/esm';
-import { STATUSES } from '@ay-bull-board/api/src/constants/statuses';
 
 const milliSecToTime = (milliSec: number) => {
   const sec = milliSec / 1000;
@@ -11,16 +10,16 @@ const milliSecToTime = (milliSec: number) => {
   const seconds = Math.floor(sec - hours * 3600 - minutes * 60);
   return `${hours}h ${minutes}m ${seconds}s`;
 };
-export const QueueStatsCard = ({ queue, status }: { queue: AppQueue; status: Status }) => {
-  if (!queue || status !== STATUSES.completed) {
-    return null;
+export const QueueStatsCard = ({ queue }: { queue: AppQueue }) => {
+  if (!queue) {
+    // return null;
   }
   const { stats } = queue;
   const { waitTime, processingTime } = stats as QueueStats;
   const activeCount = queue.counts.active || 1;
   if (waitTime && processingTime) {
     return (
-      <section className={s.flex}>
+      <section className={s.container}>
         <div className={s.card}>
           <h3>Wait Time</h3>
           <table>

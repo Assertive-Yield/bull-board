@@ -133,7 +133,7 @@ async function getAppQueues(
         failed: await queue.getMetrics('failed'),
       };
 
-      const stats = query.status === 'completed' ? await getQueuesStats(queue) : {};
+      const stats = await getQueuesStats(queue);
 
       // will fail in test since client is not mocked in ioredis-mock
       let workers = [];

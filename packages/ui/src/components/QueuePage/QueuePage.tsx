@@ -6,7 +6,6 @@ import { StatusMenu } from '../StatusMenu/StatusMenu';
 import s from './QueuePage.module.css';
 import { AppQueue } from '@ay-bull-board/api/typings/app';
 import { Pagination } from '../Pagination/Pagination';
-import { QueueStatsCard } from '../QueueStats/QueueStats';
 import { QueueSearch } from '../QueueSearch/QueueSearch';
 
 export const QueuePage = ({
@@ -41,7 +40,6 @@ export const QueuePage = ({
           <Pagination pageCount={queue.pagination.pageCount} />
         </div>
       </div>
-      <QueueStatsCard queue={queue} status={selectedStatus[queue.name]} />
       {queue.jobs.map((job) => (
         <JobCard
           key={job.id}

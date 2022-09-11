@@ -9,6 +9,7 @@ import { Header } from './Header/Header';
 import { HeaderActions } from './HeaderActions/HeaderActions';
 import { Menu } from './Menu/Menu';
 import { QueuePage } from './QueuePage/QueuePage';
+import { QueueStatsCard } from './QueueStats/QueueStats';
 import { QueueTitle } from './QueueTitle/QueueTitle';
 
 export const App = () => {
@@ -20,6 +21,7 @@ export const App = () => {
     <>
       <Header>
         {!!activeQueue && <QueueTitle queue={activeQueue} />}
+        {!!activeQueue && <QueueStatsCard queue={activeQueue} />}
         <HeaderActions />
       </Header>
       <main>
