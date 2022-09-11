@@ -1,5 +1,3 @@
-import { parse as parseRedisInfo } from 'redis-info';
-import { BaseAdapter } from '../queueAdapters/base';
 import {
   AppJob,
   AppQueue,
@@ -12,37 +10,10 @@ import {
   QueueJob,
   QueueStats,
   Status,
-  ValidMetrics,
 } from '../../typings/app';
 import { STATUSES } from '../constants/statuses';
+import { BaseAdapter } from '../queueAdapters/base';
 import { Job } from 'bullmq';
-
-type MetricName = keyof ValidMetrics;
-
-const metrics: MetricName[] = [
-  'redis_version',
-  'used_memory',
-  'mem_fragmentation_ratio',
-  'connected_clients',
-  'blocked_clients',
-];
-
-const getStats = async (queue: BaseAdapter): Promise<ValidMetrics> => {
-  const redisInfoRaw = await queue.getRedisInfo();
-  const redisInfo = parseRedisInfo(redisInfoRaw);
-
-  const validMetrics = metrics.reduce((acc, metric) => {
-    if (redisInfo[metric]) {
-      acc[metric] = redisInfo[metric];
-    }
-
-    return acc;
-  }, {} as Record<MetricName, string>);
-
-  validMetrics.total_system_memory = redisInfo.total_system_memory || redisInfo.maxmemory;
-
-  return validMetrics;
-};
 
 const formatJob = (job: QueueJob, queue: BaseAdapter): AppJob => {
   const jobProps = job.toJSON();
@@ -170,8 +141,11 @@ async function getAppQueues(
         workers = await queue.getWorkers();
       } catch (e) {}
 
+      const description = queue.getDescription() || undefined;
+
       return {
         name: queueName,
+        description,
         counts: counts as Record<Status, number>,
         metrics: metrics as MetricsObj,
         stats,
@@ -193,11 +167,9 @@ export async function queuesHandler({
   const pairs = [...bullBoardQueues.entries()];
 
   const queues = pairs.length > 0 ? await getAppQueues(pairs, query) : [];
-  const stats = pairs.length > 0 ? await getStats(pairs[0][1]) : {};
 
   return {
     body: {
-      stats,
       queues,
     },
   };

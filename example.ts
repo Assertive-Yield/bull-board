@@ -2,10 +2,10 @@ import * as Bull from 'bull';
 import Queue3 from 'bull';
 import { Queue as QueueMQ, QueueScheduler, Worker } from 'bullmq';
 import express from 'express';
-import { BullMQAdapter } from '@ay-bull-board/api/dist/src/queueAdapters/bullMQ';
-import { BullAdapter } from '@ay-bull-board/api/dist/src/queueAdapters/bull';
-import { createBullBoard } from '@ay-bull-board/api';
-import { ExpressAdapter } from '@ay-bull-board/express';
+import { BullMQAdapter } from '@ay-bull-board/api/src/queueAdapters/bullMQ';
+import { BullAdapter } from '@ay-bull-board/api/src/queueAdapters/bull';
+import { createBullBoard } from '@ay-bull-board/api/src';
+import { ExpressAdapter } from '@ay-bull-board/express/src';
 
 const redisOptions = {
   port: 6379,
@@ -59,9 +59,25 @@ const run = async () => {
 
   const exampleBull = createQueue3('ExampleBull');
   const exampleBullMq = createQueueMQ('ExampleBullMQ');
+  const exampleBullMq2 = createQueueMQ('ExampleBullMQ2');
+  const exampleBullMq3 = createQueueMQ('ExampleBullMQ3');
+  const exampleBullMq4 = createQueueMQ('ExampleBullMQ4');
+  const exampleBullMq5 = createQueueMQ('ExampleBullMQ5');
+  const exampleBullMq6 = createQueueMQ('ExampleBullMQ6');
+  const exampleBullMq7 = createQueueMQ('ExampleBullMQ7');
+  const exampleBullMq8 = createQueueMQ('ExampleBullMQ8');
+  const exampleBullMq9 = createQueueMQ('ExampleBullMQ9');
 
   await setupBullProcessor(exampleBull); // needed only for example proposes
   await setupBullMQProcessor(exampleBullMq.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq2.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq3.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq4.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq5.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq6.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq7.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq8.name); // needed only for example proposes
+  await setupBullMQProcessor(exampleBullMq9.name); // needed only for example proposes
 
   app.use('/add', (req, res) => {
     const opts = req.query.opts || ({} as any);
@@ -78,11 +94,22 @@ const run = async () => {
     });
   });
 
-  const serverAdapter = new ExpressAdapter();
+  const serverAdapter: any = new ExpressAdapter();
   serverAdapter.setBasePath('/ui');
 
   createBullBoard({
-    queues: [new BullMQAdapter(exampleBullMq), new BullAdapter(exampleBull)],
+    queues: [
+      new BullMQAdapter(exampleBullMq),
+      new BullMQAdapter(exampleBullMq2),
+      new BullMQAdapter(exampleBullMq3),
+      new BullMQAdapter(exampleBullMq4),
+      new BullMQAdapter(exampleBullMq5),
+      new BullMQAdapter(exampleBullMq6),
+      new BullMQAdapter(exampleBullMq7),
+      new BullMQAdapter(exampleBullMq8),
+      new BullMQAdapter(exampleBullMq9),
+      new BullAdapter(exampleBull),
+    ],
     serverAdapter,
   });
 

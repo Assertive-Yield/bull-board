@@ -30,6 +30,8 @@ async function setupBullMQProcessor(queueName) {
     }
 
     return { jobId: `This is the return value of job (${job.id})` };
+  }, {
+    connection: redisOptions,
   });
 }
 
@@ -57,7 +59,7 @@ const run = async () => {
     });
   });
 
-  await app.listen(3000);
+  await app.listen({ port: 3000 });
   // eslint-disable-next-line no-console
   console.log('Running on 3000...');
   console.log('For the UI with basic auth, open http://localhost:3000/basic/login');

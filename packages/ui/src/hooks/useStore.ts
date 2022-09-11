@@ -2,9 +2,8 @@ import { AppJob } from '@ay-bull-board/api/typings/app';
 import { GetQueuesResponse } from '@ay-bull-board/api/typings/responses';
 import { useState } from 'react';
 import { QueueActions, SelectedStatuses } from '../../typings/app';
-
-import { Api } from '../services/Api';
-import { useActiveQueue } from './useActiveQueue';
+import { useActiveQueueName } from './useActiveQueueName';
+import { useApi } from './useApi';
 import { ConfirmApi, useConfirm } from './useConfirm';
 import { useInterval } from './useInterval';
 import { useQuery } from './useQuery';
@@ -24,14 +23,16 @@ export interface Store {
   confirmProps: ConfirmApi['confirmProps'];
 }
 
-export const useStore = (api: Api): Store => {
+export const useStore = (): Store => {
   const query = useQuery();
-  const activeQueue = useActiveQueue();
+  const api = useApi();
 
   const [state, setState] = useState<State>({
     data: null,
     loading: true,
   });
+
+  const activeQueueName = useActiveQueueName();
   const { confirmProps, openConfirm } = useConfirm();
 
   const selectedStatuses = useSelectedStatuses();
@@ -39,8 +40,8 @@ export const useStore = (api: Api): Store => {
   const update = () =>
     api
       .getQueues({
-        activeQueue,
-        status: activeQueue ? selectedStatuses[activeQueue] : undefined,
+        activeQueue: activeQueueName,
+        status: activeQueueName ? selectedStatuses[activeQueueName] : undefined,
         page: query.get('page') || '1',
         search: query.get('search') || '',
       })

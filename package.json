@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/root",
-  "version": "3.10.2-ayFork-1.0.7",
+  "version": "4.2.2-ayFork-1.0.7",
   "private": true,
   "description": "Bull queue UI for inspecting jobs",
   "keywords": [
@@ -40,40 +40,40 @@
     "release": "release-it --only-version"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
+    "@babel/core": "^7.17.9",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@babel/runtime": "^7.17.8",
+    "@babel/runtime": "^7.17.9",
     "@types/bull": "^3.15.8",
     "@types/ioredis": "^4.28.10",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.22",
+    "@types/node": "^17.0.25",
     "@types/redis-info": "^3.0.0",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "auto-changelog": "^2.4.0",
-    "babel-loader": "^8.2.2",
-    "bull": "^4.8.1",
-    "bullmq": "^1.77.3",
-    "concurrently": "^7.0.0",
+    "babel-loader": "^8.2.5",
+    "bull": "^4.8.2",
+    "bullmq": "^1.80.6",
+    "concurrently": "^7.1.0",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-no-only-tests": "^2.6.0",
     "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1",
     "lerna": "^4.0.0",
-    "prettier": "^2.6.0",
-    "release-it": "^14.13.1",
+    "prettier": "^2.6.2",
+    "release-it": "^14.14.2",
     "release-it-yarn-workspaces": "^2.0.1",
     "supertest": "^6.2.2",
-    "ts-jest": "^27.1.3",
+    "ts-jest": "^27.1.4",
     "ts-node-dev": "^1.1.6",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.3"
   },
   "release-it": {
     "plugins": {
@@ -96,5 +96,9 @@
       "release": false
     },
     "npm": false
+  },
+  "resolutions": {
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.14"
   }
 }

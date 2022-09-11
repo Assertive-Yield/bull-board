@@ -1,15 +1,15 @@
 const { FastifyAdapter } = require('@ay-bull-board/fastify');
 const { createBullBoard } = require('@ay-bull-board/api');
 const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
-const pointOfView = require('point-of-view');
+const pointOfView = require('@fastify/view');
 const path = require('path');
 
 module.exports.cookieAuth = function cookieAuth(fastify, { queue }, next) {
-  fastify.register(require('fastify-cookie'), {
+  fastify.register(require('@fastify/cookie'), {
     secret: 'my-secret-key', // for cookies signature
   });
 
-  fastify.register(require('fastify-jwt'), {
+  fastify.register(require('@fastify/jwt'), {
     secret: 'super-secret',
     cookie: {
       cookieName: 'token',
@@ -37,7 +37,7 @@ module.exports.cookieAuth = function cookieAuth(fastify, { queue }, next) {
     fastify.route({
       method: 'GET',
       url: '/cookie/login',
-      handler: async (req, reply) => {
+      handler: (req, reply) => {
         reply.view('login.ejs');
       },
     });

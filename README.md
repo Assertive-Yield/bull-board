@@ -5,9 +5,9 @@ With this library you get a beautiful UI for visualizing what's happening with e
 
 <p align="center">
   <a href="https://www.npmjs.com/org/bull-board">
-    <img alt="npm downloads" src="https://img.shields.io/npm/dw/bull-board">
+    <img alt="npm downloads" src="https://img.shields.io/npm/dw/@bull-board/api">
   </a>
-  <a href="https://github.com/vcapretz/bull-board/blob/master/LICENSE">
+  <a href="https://github.com/felixmosh/bull-board/blob/master/LICENSE">
     <img alt="licence" src="https://img.shields.io/github/license/felixmosh/bull-board">
   </a>
   <img alt="open issues" src="https://img.shields.io/github/issues/felixmosh/bull-board"/>
@@ -15,6 +15,17 @@ With this library you get a beautiful UI for visualizing what's happening with e
 
 ![UI](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/shot.png)
 ![Fails](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/fails.png)
+
+## Packages
+
+| Name                                                                     | Version                                                           |
+|--------------------------------------------------------------------------|-------------------------------------------------------------------|
+| [@bull-board/api](https://www.npmjs.com/package/@bull-board/api)         | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/api)     |
+| [@bull-board/ui](https://www.npmjs.com/package/@bull-board/ui)           | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/ui)      |
+| [@bull-board/express](https://www.npmjs.com/package/@bull-board/express) | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/express) |
+| [@bull-board/fastify](https://www.npmjs.com/package/@bull-board/fastify) | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/fastify) |
+| [@bull-board/koa](https://www.npmjs.com/package/@bull-board/koa)         | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/koa)     |
+| [@bull-board/hapi](https://www.npmjs.com/package/@bull-board/hapi)       | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/hapi)    |
 
 ## Notes
 
@@ -59,16 +70,19 @@ npm i @ay-bull-board/koa
 const express = require('express');
 const Queue = require('bull');
 const QueueMQ = require('bullmq');
-const { createBullBoard } = require('@ay-bull-board/api');
-const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
-const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
-const { ExpressAdapter } = require('@ay-bull-board/express');
+const { createBullBoard } = require('@bull-board/api');
+const { BullAdapter } = require('@bull-board/api/bullAdapter');
+const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
+const { ExpressAdapter } = require('@bull-board/express');
 
-const someQueue = new Queue('someQueueName');
+const someQueue = new Queue('someQueueName', {
+  redis: { port: 6379, host: '127.0.0.1', password: 'foobared' },
+}); // if you have a special connection to redis.
 const someOtherQueue = new Queue('someOtherQueueName');
 const queueMQ = new QueueMQ('queueMQName');
 
 const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath('/admin/queues');
 
 const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
   queues: [new BullAdapter(someQueue), new BullAdapter(someOtherQueue), new BullMQAdapter(queueMQ)],
@@ -77,10 +91,15 @@ const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
 
 const app = express();
 
-serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // other configurations of your server
+  
+app.listen(3000, () => {
+  console.log('Running on 3000...');
+  console.log('For the UI, open http://localhost:3000/admin/queues');
+  console.log('Make sure Redis is running on port 6379 by default');
+});
 ```
 
 That's it! Now you can access the `/admin/queues` route, and you will be able to monitor everything that is happening in your queues 😁
@@ -150,9 +169,11 @@ const { createBullBoard } = require('@ay-bull-board/api');
 const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
 const { ExpressAdapter } = require('@ay-bull-board/express');
 
-const someQueue = new Queue('someQueueName');
+const basePath = '/my-base-path';
 
+const someQueue = new Queue('someQueueName')
 const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath(basePath)
 
 createBullBoard({
   queues: [new BullAdapter(someQueue)],
@@ -161,10 +182,7 @@ createBullBoard({
 
 // ... express server configuration
 
-const basePath = 'my-base-path';
-serverAdapter.setBasePath(basePath);
-
-app.use('/queues', serverAdapter.getRouter());
+app.use(basePath, serverAdapter.getRouter());
 ```
 
 You will then find the bull-board UI at the following address `https://<server_name>/my-base-path/queues`.
@@ -205,13 +223,15 @@ cd bull-board
 
 _This project requires that you have [yarn](https://yarnpkg.com/lang/en/) installed_
 
-Also make sure you are running Redis for this project (bull-board's example connects to Redis' default port `6379`).
+Also make sure you are running **Redis** for this project (bull-board's example connects to Redis' default port `6379`).
 
 Now, to try it out locally you can run:
 
 ```sh
-yarn && yarn start:dev
+yarn && yarn build && yarn start:dev
 ```
+
+The ui open automaticlly in the browser at `http://localhost:3000/ui`
 
 ### Acknowledgements ❤️
 

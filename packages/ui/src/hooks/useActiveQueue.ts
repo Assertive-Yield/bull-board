@@ -1,13 +1,15 @@
-import { matchPath } from 'react-router';
-import { useLocation } from 'react-router-dom';
+import { AppQueue } from '@ay-bull-board/api/dist/typings/app';
+import { useActiveQueueName } from './useActiveQueueName';
+import { Store } from './useStore';
 
-export function useActiveQueue(): string | undefined {
-  const { pathname } = useLocation();
-  const match = matchPath<{ name: string }>(pathname, {
-    path: '/queue/:name',
-    exact: true,
-    strict: true,
-  });
+export function useActiveQueue(data: Store['state']['data']): AppQueue | null {
+  const activeQueueName = useActiveQueueName();
 
-  return decodeURIComponent(match?.params.name || '') || undefined;
+  if (!data) {
+    return null;
+  }
+
+  const activeQueue = data?.queues?.find((q) => q.name === activeQueueName);
+
+  return activeQueue || null;
 }

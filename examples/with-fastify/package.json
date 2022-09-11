@@ -10,8 +10,8 @@
   "author": "felixmosh",
   "license": "ISC",
   "dependencies": {
-    "@ay-bull-board/fastify": "^3.9.0",
-    "bullmq": "^1.64.0",
-    "fastify": "^3.25.3"
+    "@ay-bull-board/fastify": "^4.2.1",
+    "bullmq": "^1.81.1",
+    "fastify": "^4.3.0"
   }
 }

@@ -1,3 +1,4 @@
+import { RedisInfo } from 'redis-info';
 import { BaseAdapter } from '../src/queueAdapters/base';
 import { STATUSES } from '../src/constants/statuses';
 import { Metrics } from 'bullmq';
@@ -14,6 +15,7 @@ export interface QueueAdapterOptions {
   readOnlyMode: boolean;
   allowRetries: boolean;
   prefix: string;
+  description: string;
 }
 
 export type BullBoardQueues = Map<string, BaseAdapter>;
@@ -50,13 +52,22 @@ export interface QueueJobJson {
   parentKey?: string;
 }
 
-export interface ValidMetrics {
-  total_system_memory: string;
-  redis_version: string;
-  used_memory: string;
-  mem_fragmentation_ratio: string;
-  connected_clients: string;
-  blocked_clients: string;
+export interface RedisStats {
+  version: string;
+  mode: RedisInfo['redis_mode'];
+  port: number;
+  os: string;
+  uptime: string;
+  memory: {
+    total: number;
+    used: number;
+    fragmentationRatio: number;
+    peak: number;
+  };
+  clients: {
+    connected: number;
+    blocked: number;
+  };
 }
 
 export interface AppJob {
@@ -98,6 +109,7 @@ export interface MetricsObj {
 
 export interface AppQueue {
   name: string;
+  description?: string;
   counts: Record<Status, number>;
   jobs: AppJob[];
   pagination: Pagination;
