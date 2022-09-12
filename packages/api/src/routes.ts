@@ -5,6 +5,7 @@ import { entryPoint } from './handlers/entryPoint';
 import { jobLogsHandler } from './handlers/jobLogs';
 import { pauseQueueHandler } from './handlers/pauseQueue';
 import { promoteJobHandler } from './handlers/promotJob';
+import { purgeQueueHandler } from './handlers/purgeQueue';
 import { queuesHandler } from './handlers/queues';
 import { redisStatsHandler } from './handlers/redisStats';
 import { resumeQueueHandler } from './handlers/resumeQueue';
@@ -34,6 +35,11 @@ export const appRoutes: AppRouteDefs = {
       method: 'put',
       route: '/api/queues/:queueName/clean/:queueStatus',
       handler: cleanAllHandler,
+    },
+    {
+      method: 'put',
+      route: '/api/queues/:queueName/purge',
+      handler: purgeQueueHandler,
     },
     {
       method: 'put',

@@ -110,6 +110,12 @@ export const useStore = (): Store => {
       'Are you sure that you want to clean all completed jobs?'
     );
 
+  const purgeQueue = (queueName: string) =>
+    withConfirmAndUpdate(
+      () => api.purgeQueue(queueName),
+      'Are you sure that you want to purge the queue?'
+    );
+
   const pauseQueue = (queueName: string) =>
     withConfirmAndUpdate(
       () => api.pauseQueue(queueName),
@@ -135,6 +141,7 @@ export const useStore = (): Store => {
       cleanAllDelayed,
       cleanAllFailed,
       cleanAllCompleted,
+      purgeQueue,
       getJobLogs,
       pauseQueue,
       resumeQueue,

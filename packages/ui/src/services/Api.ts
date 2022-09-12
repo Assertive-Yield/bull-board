@@ -41,6 +41,10 @@ export class Api {
     return this.axios.put(`/queues/${encodeURIComponent(queueName)}/clean/completed`);
   }
 
+  public purgeQueue(queueName: string): Promise<void> {
+    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/purge`);
+  }
+
   public cleanJob(queueName: string, jobId: AppJob['id']): Promise<void> {
     return this.axios.put(
       `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/clean`

@@ -41,6 +41,8 @@ export abstract class BaseAdapter {
 
   public abstract clean(queueStatus: JobCleanStatus, graceTimeMs: number): Promise<void>;
 
+  public abstract purge(): Promise<void>;
+
   public abstract getJob(id: string): Promise<QueueJob | undefined | null>;
 
   public abstract getJobCounts(...jobStatuses: JobStatus[]): Promise<JobCounts>;

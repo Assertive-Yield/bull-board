@@ -28,6 +28,10 @@ export class BullAdapter extends BaseAdapter {
     return this.queue.clean(graceTimeMs, jobStatus as any);
   }
 
+  public purge(): Promise<any> {
+    return this.queue.obliterate({ force: true });
+  }
+
   public getJob(id: string): Promise<Job | undefined | null> {
     return this.queue.getJob(id).then((job) => {
       if (typeof job?.attemptsMade === 'number') {

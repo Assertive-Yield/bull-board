@@ -30,6 +30,10 @@ export class BullMQAdapter extends BaseAdapter {
     return this.queue.clean(graceTimeMs, this.LIMIT, jobStatus).then(() => undefined);
   }
 
+  public purge(): Promise<void> {
+    return this.queue.obliterate({ force: true }).then(() => undefined);
+  }
+
   public getJob(id: string): Promise<Job | undefined> {
     return this.queue.getJob(id);
   }
