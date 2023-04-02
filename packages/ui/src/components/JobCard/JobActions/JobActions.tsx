@@ -33,7 +33,7 @@ const buttonTypes: Record<string, ButtonType> = {
 const statusToButtonsMap: Record<string, ButtonType[]> = {
   [STATUSES.failed]: [buttonTypes.retry, buttonTypes.clean],
   [STATUSES.delayed]: [buttonTypes.promote, buttonTypes.clean],
-  [STATUSES.completed]: [buttonTypes.clean],
+  [STATUSES.completed]: [buttonTypes.retry, buttonTypes.clean],
   [STATUSES.waiting]: [buttonTypes.clean],
 };
 
@@ -42,9 +42,11 @@ export const JobActions = ({ actions, status, allowRetries }: JobActionsProps) =
   if (!buttons) {
     return null;
   }
+
   if (!allowRetries) {
     buttons = buttons.filter((btn) => btn.actionKey !== 'retryJob');
   }
+
   return (
     <ul className={s.jobActions}>
       {buttons.map((type) => (

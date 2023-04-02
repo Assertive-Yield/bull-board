@@ -4,14 +4,15 @@ import {
   BullBoardQueues,
   ControllerHandlerReturnType,
   IServerAdapter,
+  UIConfig,
 } from '@ay-bull-board/api/dist/typings/app';
 
 import Koa from 'koa';
-import Router from 'koa-router';
 import mount from 'koa-mount';
-import path from 'path';
+import Router from 'koa-router';
 import serve from 'koa-static';
 import views from 'koa-views';
+import path from 'path';
 
 export class KoaAdapter implements IServerAdapter {
   private basePath = '';
@@ -21,6 +22,7 @@ export class KoaAdapter implements IServerAdapter {
   private viewPath: string | undefined;
   private entryRoute: AppViewRoute | undefined;
   private apiRoutes: AppControllerRoute[] | undefined;
+  private uiConfig: UIConfig = {};
 
   public setBasePath(path: string): KoaAdapter {
     this.basePath = path;
@@ -60,7 +62,12 @@ export class KoaAdapter implements IServerAdapter {
     return this;
   }
 
-  public registerPlugin() {
+  public setUIConfig(config: UIConfig = {}): KoaAdapter {
+    this.uiConfig = config;
+    return this;
+  }
+
+  public registerPlugin(options: Partial<{ mount: string }> = { mount: this.basePath }) {
     if (!this.statics) {
       throw new Error(`Please call 'setStaticPath' before using 'registerPlugin'`);
     } else if (!this.entryRoute) {
@@ -73,6 +80,10 @@ export class KoaAdapter implements IServerAdapter {
       throw new Error(`Please call 'setQueues' before using 'registerPlugin'`);
     } else if (!this.errorHandler) {
       throw new Error(`Please call 'setErrorHandler' before using 'registerPlugin'`);
+    }
+
+    if (!options.mount) {
+      options.mount = this.basePath;
     }
 
     const app = new Koa();
@@ -106,7 +117,11 @@ export class KoaAdapter implements IServerAdapter {
       router[method](path, async (ctx) => {
         const { name } = handler();
         const basePath = this.basePath.endsWith('/') ? this.basePath : `${this.basePath}/`;
-        await (ctx as any).render(name, { basePath });
+        const uiConfig = JSON.stringify(this.uiConfig)
+          .replace(/</g, '\\u003c')
+          .replace(/>/g, '\\u003e');
+
+        await (ctx as any).render(name, { basePath, uiConfig });
       });
     });
 
@@ -130,6 +145,6 @@ export class KoaAdapter implements IServerAdapter {
 
     app.use(router.routes()).use(router.allowedMethods());
 
-    return mount(this.basePath || '', app);
+    return mount(options.mount || '/', app);
   }
 }

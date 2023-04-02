@@ -1,9 +1,11 @@
 import { RedisInfo } from 'redis-info';
-import { BaseAdapter } from '../src/queueAdapters/base';
 import { STATUSES } from '../src/constants/statuses';
 import { Metrics } from 'bullmq';
+import { BaseAdapter } from '../src/queueAdapters/base';
 
 export type JobCleanStatus = 'completed' | 'wait' | 'active' | 'delayed' | 'failed';
+
+export type JobRetryStatus = 'completed' | 'failed';
 
 export type Status = keyof typeof STATUSES;
 
@@ -29,7 +31,7 @@ export interface QueueJob {
 
   remove(): Promise<void>;
 
-  retry(): Promise<void>;
+  retry(state?: JobRetryStatus): Promise<void>;
 
   toJSON(): QueueJobJson;
 }
@@ -43,6 +45,7 @@ export interface QueueJobJson {
   attemptsMade: number;
   finishedOn?: number | null;
   processedOn?: number | null;
+  delay?: number;
   timestamp: number;
   failedReason: string;
   stacktrace: string[] | null;
@@ -115,6 +118,7 @@ export interface AppQueue {
   pagination: Pagination;
   readOnlyMode: boolean;
   allowRetries: boolean;
+  allowCompletedRetries: boolean;
   isPaused: boolean;
   metrics: MetricsObj | undefined;
   stats: QueueStats | Record<string, never>;
@@ -172,6 +176,8 @@ export interface IServerAdapter {
   setErrorHandler(handler: (error: Error) => ControllerHandlerReturnType): IServerAdapter;
 
   setApiRoutes(routes: AppControllerRoute[]): IServerAdapter;
+
+  setUIConfig(config: UIConfig): IServerAdapter;
 }
 
 export interface Pagination {
@@ -183,3 +189,18 @@ export interface Pagination {
 }
 
 export type FormatterField = 'data' | 'returnValue' | 'name';
+
+export type BoardOptions = {
+  uiConfig: UIConfig;
+};
+
+export type IMiscLink = {
+  text: string;
+  url: string;
+};
+
+export type UIConfig = Partial<{
+  boardTitle: string;
+  boardLogo: { path: string; width?: number | string; height?: number | string };
+  miscLinks: Array<IMiscLink>;
+}>;

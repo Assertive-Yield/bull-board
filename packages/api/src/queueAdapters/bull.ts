@@ -4,7 +4,7 @@ import { BaseAdapter } from './base';
 
 export class BullAdapter extends BaseAdapter {
   constructor(public queue: Queue, options: Partial<QueueAdapterOptions> = {}) {
-    super(options);
+    super({ ...options, allowCompletedRetries: false });
   }
 
   public getRedisInfo(): Promise<string> {
@@ -94,5 +94,9 @@ export class BullAdapter extends BaseAdapter {
 
   public resume(): Promise<void> {
     return this.queue.resume();
+  }
+
+  public empty(): Promise<void> {
+    return this.queue.empty();
   }
 }

@@ -1,4 +1,10 @@
-import { AppJob, RedisStats, Status } from '@ay-bull-board/api/typings/app';
+import {
+  AppJob,
+  JobCleanStatus,
+  JobRetryStatus,
+  RedisStats,
+  Status,
+} from '@ay-bull-board/api/typings/app';
 import { GetQueuesResponse } from '@ay-bull-board/api/typings/responses';
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
@@ -15,30 +21,30 @@ export class Api {
     activeQueue,
     status,
     page,
+    jobsPerPage,
     search,
   }: {
     activeQueue?: string;
     status?: Status;
     page: string;
+    jobsPerPage: number;
     search?: string;
   }): Promise<GetQueuesResponse> {
-    return this.axios.get(`/queues`, { params: { activeQueue, status, page, search } });
+    return this.axios.get(`/queues`, {
+      params: { activeQueue, status, page, jobsPerPage, search },
+    });
   }
 
-  public retryAll(queueName: string): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/retry`);
+  public retryAll(queueName: string, status: JobRetryStatus): Promise<void> {
+    return this.axios.put(
+      `/queues/${encodeURIComponent(queueName)}/retry/${encodeURIComponent(status)}`
+    );
   }
 
-  public cleanAllDelayed(queueName: string): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/clean/delayed`);
-  }
-
-  public cleanAllFailed(queueName: string): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/clean/failed`);
-  }
-
-  public cleanAllCompleted(queueName: string): Promise<void> {
-    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/clean/completed`);
+  public cleanAll(queueName: string, status: JobCleanStatus): Promise<void> {
+    return this.axios.put(
+      `/queues/${encodeURIComponent(queueName)}/clean/${encodeURIComponent(status)}`
+    );
   }
 
   public purgeQueue(queueName: string): Promise<void> {
@@ -51,9 +57,11 @@ export class Api {
     );
   }
 
-  public retryJob(queueName: string, jobId: AppJob['id']): Promise<void> {
+  public retryJob(queueName: string, jobId: AppJob['id'], status: JobRetryStatus): Promise<void> {
     return this.axios.put(
-      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(`${jobId}`)}/retry`
+      `/queues/${encodeURIComponent(queueName)}/${encodeURIComponent(
+        `${jobId}`
+      )}/retry/${encodeURIComponent(status)}`
     );
   }
 
@@ -75,6 +83,10 @@ export class Api {
 
   public resumeQueue(queueName: string) {
     return this.axios.put(`/queues/${encodeURIComponent(queueName)}/resume`);
+  }
+
+  public emptyQueue(queueName: string) {
+    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/empty`);
   }
 
   private handleResponse(response: AxiosResponse): any {

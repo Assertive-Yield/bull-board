@@ -13,8 +13,7 @@ With this library you get a beautiful UI for visualizing what's happening with e
   <img alt="open issues" src="https://img.shields.io/github/issues/felixmosh/bull-board"/>
 <p>
 
-![UI](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/shot.png)
-![Fails](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/fails.png)
+![UI](https://raw.githubusercontent.com/felixmosh/bull-board/master/screenshots/dashboard.png)
 
 ## Packages
 
@@ -108,9 +107,45 @@ For more advanced usages check the `examples` folder, currently it contains:
 
 1. [Basic authentication example](https://github.com/felixmosh/bull-board/tree/master/examples/with-express-auth)
 2. [Multiple instance of the board](https://github.com/felixmosh/bull-board/tree/master/examples/with-multiple-instances)
+<<<<<<< HEAD
 3. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
 4. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
 5. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
+=======
+2. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
+2. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
+2. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
+
+### Board options
+1. `uiConfig.boardTitle` (default: `empty`)
+The Board title
+2. `uiConfig.boardLogo` (default: `empty`) `{ path: string; width?: number | string; height?: number | string }`
+An object that allows you to specify a different logo
+3. `uiConfig.miscLinks` (default: `empty`) `Array< { text: string; url: string }>`
+An array of misc link that you can add to the dashboard, such as logout link.
+
+```js
+const QueueMQ = require('bullmq');
+const {createBullBoard} = require('@bull-board/api');
+const {BullMQAdapter} = require('@bull-board/api/bullMQAdapter');
+
+const queueMQ = new QueueMQ();
+
+createBullBoard(
+  {
+    queues: [new BullMQAdapter(queueMQ)],
+  },
+  serverAdapter,
+  {
+    uiConfig: {
+      boardTitle: 'My BOARD',
+      boardLogo: {path: 'https://cdn.my-domain.com/logo.png', width: '100px', height: 200},
+      miscLinks: [{ text: 'Logout', url: '/logout' }],
+    },
+  }
+);
+```
+>>>>>>> master
 
 ### Queue options
 
@@ -124,14 +159,18 @@ const { createBullBoard } = require('@ay-bull-board/api');
 const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
 const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
 
+<<<<<<< HEAD
 const someQueue = new Queue();
 const someOtherQueue = new Queue();
 const queueMQ = new QueueMQ();
+=======
+const someQueue = new Queue()
+const queueMQ = new QueueMQ()
+>>>>>>> master
 
-const { setQueues, replaceQueues } = createBullBoard({
+createBullBoard({
   queues: [
     new BullAdapter(someQueue, { readOnlyMode: true }), // only this queue will be in read only mode
-    new BullAdapter(someOtherQueue),
     new BullMQAdapter(queueMQ, { readOnlyMode: true }),
   ],
 });
@@ -147,15 +186,47 @@ const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter')
 const { BullAdapter } = require('@ay-bull-board/api/bullAdapter')
 
 const someQueue = new Queue()
-const someOtherQueue = new Queue()
 const queueMQ = new QueueMQ()
 
-const { setQueues, replaceQueues } = createBullBoard({
+createBullBoard({
   queues: [
+<<<<<<< HEAD
     new BullAdapter(someQueue),
     new BullAdapter(someOtherQueue, , { allowRetries: false }), // No retry buttons
+=======
+    new BullAdapter(someQueue, { allowRetries: false }), // No retry buttons
+>>>>>>> master
     new BullMQAdapter(queueMQ, { allowRetries: true, readOnlyMode: true }), // allowRetries will be ignored in this case in lieu of readOnlyMode
   ]
+})
+```
+
+3. `description` (default: `empty`)
+   Queue description text.
+
+4. `prefix` (default: `empty`)
+   Job name prefix.
+5. `queueAdapter.setFormatter(field: 'data' | 'returnValue' | 'name', formatter: (fieldData) => any)`
+   You can specify a formatter for `'data' | 'returnValue' | 'name'` job's fields.
+
+```js
+const QueueMQ = require('bullmq');
+const fastRedact = require('fast-redact');
+const { createBullBoard } = require('@bull-board/api');
+const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
+
+const redact = fastRedact({
+  paths: ['headers.cookie', 'password', 'access_token']
+})
+
+const queueMQ = new QueueMQ()
+const queueAdapter = new BullMQAdapter(queueMQ);
+queueAdapter.setFormatter('name', (job) => `#Queue1 - ${job.name}`);
+queueAdapter.setFormatter('data', (data) => redact(data));
+queueAdapter.setFormatter('returnValue', (returnValue) => redact(returnValue));
+
+createBullBoard({
+  queues: [queueAdapter]
 })
 ```
 

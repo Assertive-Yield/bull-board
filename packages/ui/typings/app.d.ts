@@ -1,4 +1,10 @@
-import { AppJob, AppQueue, Status } from '@ay-bull-board/api/typings/app';
+import {
+  AppJob,
+  AppQueue,
+  JobCleanStatus,
+  JobRetryStatus,
+  Status,
+} from '@ay-bull-board/api/typings/app';
 
 export { Status } from '@ay-bull-board/api/typings/app';
 
@@ -6,14 +12,12 @@ export type SelectedStatuses = Record<AppQueue['name'], Status>;
 
 export interface QueueActions {
   promoteJob: (queueName: string) => (job: AppJob) => () => Promise<void>;
-  retryJob: (queueName: string) => (job: AppJob) => () => Promise<void>;
+  retryJob: (queueName: string, status: JobRetryStatus) => (job: AppJob) => () => Promise<void>;
   cleanJob: (queueName: string) => (job: AppJob) => () => Promise<void>;
   getJobLogs: (queueName: string) => (job: AppJob) => () => Promise<string[]>;
-  retryAll: (queueName: string) => () => Promise<void>;
-  cleanAllDelayed: (queueName: string) => () => Promise<void>;
-  cleanAllFailed: (queueName: string) => () => Promise<void>;
-  cleanAllCompleted: (queueName: string) => () => Promise<void>;
-  purgeQueue: (queueName: string) => () => Promise<void>;
+  retryAll: (queueName: string, status: JobRetryStatus) => () => Promise<void>;
+  cleanAll: (queueName: string, status: JobCleanStatus) => () => Promise<void>;
   pauseQueue: (queueName: string) => () => Promise<void>;
   resumeQueue: (queueName: string) => () => Promise<void>;
+  emptyQueue: (queueName: string) => () => Promise<void>;
 }
