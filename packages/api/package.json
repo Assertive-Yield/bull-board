@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/api",
-  "version": "5.0.0-ayFork-1.0.15",
+  "version": "5.0.0-ayFork-1.0.16",
   "description": "Core server APIs of bull-board",
   "keywords": [
     "bull",
