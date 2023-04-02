@@ -1,4 +1,4 @@
-import { AppJob } from '@bull-board/api/typings/app';
+import { AppJob } from '@ay-bull-board/api/typings/app';
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useInterval } from '../../../../../hooks/useInterval';
 import { InputField } from '../../../../Form/InputField/InputField';

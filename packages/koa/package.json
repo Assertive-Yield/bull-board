@@ -28,8 +28,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@bull-board/api": "5.0.0-ayFork-1.0.12",
-    "@bull-board/ui": "5.0.0-ayFork-1.0.12",
+    "@ay-bull-board/api": "5.0.0-ayFork-1.0.12",
+    "@ay-bull-board/ui": "5.0.0-ayFork-1.0.12",
     "ejs": "^3.1.7",
     "koa": "^2.13.1",
     "koa-mount": "^4.0.0",

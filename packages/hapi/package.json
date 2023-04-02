@@ -29,8 +29,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@bull-board/api": "5.0.0-ayFork-1.0.12",
-    "@bull-board/ui": "5.0.0-ayFork-1.0.12",
+    "@ay-bull-board/api": "5.0.0-ayFork-1.0.12",
+    "@ay-bull-board/ui": "5.0.0-ayFork-1.0.12",
     "@hapi/inert": "^6.0.5",
     "@hapi/vision": "^6.1.0",
     "ejs": "^3.1.7"

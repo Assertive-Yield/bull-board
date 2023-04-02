@@ -15,25 +15,17 @@
   margin-left: 0.75rem;
 }
 
-.tabContent::-webkit-scrollbar {
-  width: 0.5rem;
-}
-
-.tabContent::-webkit-scrollbar-track {
-  padding: 2px;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.tabContent::-webkit-scrollbar-thumb {
-  background-color: #cbd5e0;
-  border-radius: 4px;
-}
-
 .tabContent {
   flex: 1;
   max-width: calc(100% - 80px);
-  overflow: auto;
   position: relative;
+  overflow: hidden;
+}
+
+.tabContent > div {
+  overflow: auto;
+  padding-bottom: 2rem;
+  height: 100%;
 }
 
 .tabContent :global(.error) {

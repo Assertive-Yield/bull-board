@@ -18,7 +18,7 @@ With this library you get a beautiful UI for visualizing what's happening with e
 ## Packages
 
 | Name                                                                     | Version                                                           |
-|--------------------------------------------------------------------------|-------------------------------------------------------------------|
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
 | [@bull-board/api](https://www.npmjs.com/package/@bull-board/api)         | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/api)     |
 | [@bull-board/ui](https://www.npmjs.com/package/@bull-board/ui)           | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/ui)      |
 | [@bull-board/express](https://www.npmjs.com/package/@bull-board/express) | ![npm (scoped)](https://img.shields.io/npm/v/@bull-board/express) |
@@ -93,7 +93,7 @@ const app = express();
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // other configurations of your server
-  
+
 app.listen(3000, () => {
   console.log('Running on 3000...');
   console.log('For the UI, open http://localhost:3000/admin/queues');
@@ -107,27 +107,23 @@ For more advanced usages check the `examples` folder, currently it contains:
 
 1. [Basic authentication example](https://github.com/felixmosh/bull-board/tree/master/examples/with-express-auth)
 2. [Multiple instance of the board](https://github.com/felixmosh/bull-board/tree/master/examples/with-multiple-instances)
-<<<<<<< HEAD
 3. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
 4. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
 5. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
-=======
-2. [With Fastify server](https://github.com/felixmosh/bull-board/tree/master/examples/with-fastify)
-2. [With Hapi.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-hapi)
-2. [With Koa.js server](https://github.com/felixmosh/bull-board/tree/master/examples/with-koa)
 
 ### Board options
+
 1. `uiConfig.boardTitle` (default: `empty`)
-The Board title
+   The Board title
 2. `uiConfig.boardLogo` (default: `empty`) `{ path: string; width?: number | string; height?: number | string }`
-An object that allows you to specify a different logo
+   An object that allows you to specify a different logo
 3. `uiConfig.miscLinks` (default: `empty`) `Array< { text: string; url: string }>`
-An array of misc link that you can add to the dashboard, such as logout link.
+   An array of misc link that you can add to the dashboard, such as logout link.
 
 ```js
 const QueueMQ = require('bullmq');
-const {createBullBoard} = require('@bull-board/api');
-const {BullMQAdapter} = require('@bull-board/api/bullMQAdapter');
+const { createBullBoard } = require('@bull-board/api');
+const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
 
 const queueMQ = new QueueMQ();
 
@@ -139,13 +135,12 @@ createBullBoard(
   {
     uiConfig: {
       boardTitle: 'My BOARD',
-      boardLogo: {path: 'https://cdn.my-domain.com/logo.png', width: '100px', height: 200},
+      boardLogo: { path: 'https://cdn.my-domain.com/logo.png', width: '100px', height: 200 },
       miscLinks: [{ text: 'Logout', url: '/logout' }],
     },
   }
 );
 ```
->>>>>>> master
 
 ### Queue options
 
@@ -159,14 +154,8 @@ const { createBullBoard } = require('@ay-bull-board/api');
 const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
 const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
 
-<<<<<<< HEAD
 const someQueue = new Queue();
-const someOtherQueue = new Queue();
 const queueMQ = new QueueMQ();
-=======
-const someQueue = new Queue()
-const queueMQ = new QueueMQ()
->>>>>>> master
 
 createBullBoard({
   queues: [
@@ -180,25 +169,20 @@ createBullBoard({
    When set to `false` the UI removes the job retry buttons for a queue. This option will be ignored if `readOnlyMode` is `true`.
 
 ```js
-const QueueMQ = require('bullmq')
-const { createBullBoard } = require('@ay-bull-board/api')
-const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter')
-const { BullAdapter } = require('@ay-bull-board/api/bullAdapter')
+const QueueMQ = require('bullmq');
+const { createBullBoard } = require('@ay-bull-board/api');
+const { BullMQAdapter } = require('@ay-bull-board/api/bullMQAdapter');
+const { BullAdapter } = require('@ay-bull-board/api/bullAdapter');
 
-const someQueue = new Queue()
-const queueMQ = new QueueMQ()
+const someQueue = new Queue();
+const queueMQ = new QueueMQ();
 
 createBullBoard({
   queues: [
-<<<<<<< HEAD
-    new BullAdapter(someQueue),
-    new BullAdapter(someOtherQueue, , { allowRetries: false }), // No retry buttons
-=======
     new BullAdapter(someQueue, { allowRetries: false }), // No retry buttons
->>>>>>> master
     new BullMQAdapter(queueMQ, { allowRetries: true, readOnlyMode: true }), // allowRetries will be ignored in this case in lieu of readOnlyMode
-  ]
-})
+  ],
+});
 ```
 
 3. `description` (default: `empty`)
@@ -216,18 +200,18 @@ const { createBullBoard } = require('@bull-board/api');
 const { BullMQAdapter } = require('@bull-board/api/bullMQAdapter');
 
 const redact = fastRedact({
-  paths: ['headers.cookie', 'password', 'access_token']
-})
+  paths: ['headers.cookie', 'password', 'access_token'],
+});
 
-const queueMQ = new QueueMQ()
+const queueMQ = new QueueMQ();
 const queueAdapter = new BullMQAdapter(queueMQ);
 queueAdapter.setFormatter('name', (job) => `#Queue1 - ${job.name}`);
 queueAdapter.setFormatter('data', (data) => redact(data));
 queueAdapter.setFormatter('returnValue', (returnValue) => redact(returnValue));
 
 createBullBoard({
-  queues: [queueAdapter]
-})
+  queues: [queueAdapter],
+});
 ```
 
 ### Hosting router on a sub path
@@ -242,9 +226,9 @@ const { ExpressAdapter } = require('@ay-bull-board/express');
 
 const basePath = '/my-base-path';
 
-const someQueue = new Queue('someQueueName')
+const someQueue = new Queue('someQueueName');
 const serverAdapter = new ExpressAdapter();
-serverAdapter.setBasePath(basePath)
+serverAdapter.setBasePath(basePath);
 
 createBullBoard({
   queues: [new BullAdapter(someQueue)],

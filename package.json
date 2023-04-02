@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "@ay-bull-board/root",
-  "version": "4.2.2-ayFork-1.0.12",
-=======
-  "name": "@bull-board/root",
-  "version": "5.0.0",
->>>>>>> master
+  "version": "5.0.0-ayFork-1.0.12",
   "private": true,
   "description": "Bull queue UI for inspecting jobs",
   "keywords": [
@@ -37,7 +32,7 @@
     "lint": "eslint \"./packages/**/*.ts*\"",
     "build": "lerna run build",
     "start:dev:docker": "docker-compose up -d",
-    "start:dev:ui": "lerna run --stream --scope @bull-board/ui start",
+    "start:dev:ui": "lerna run --stream --scope @ay-bull-board/ui start",
     "start:dev:server": "ts-node-dev --rs example.internal.ts",
     "start:dev": "concurrently --names \"UI,API\" -c \"bgBlue.bold,bgMagenta.bold\" \"yarn start:dev:ui\" \"yarn start:dev:server\"",
     "test": "lerna run test",
