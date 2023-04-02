@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './QueueStats.module.css';
 import { AppQueue, QueueStats } from '@ay-bull-board/api/typings/app';
 import { formatDistance } from 'date-fns/esm';
+import { Store } from '../../hooks/useStore';
 
 const milliSecToTime = (milliSec: number) => {
   const sec = milliSec / 1000;
@@ -10,12 +11,27 @@ const milliSecToTime = (milliSec: number) => {
   const seconds = Math.floor(sec - hours * 3600 - minutes * 60);
   return `${hours}h ${minutes}m ${seconds}s`;
 };
-export const QueueStatsCard = ({ queue }: { queue: AppQueue }) => {
-  if (!queue) {
-    // return null;
-  }
-  const { stats } = queue;
-  const { waitTime, processingTime } = stats as QueueStats;
+export const QueueStatsCard = ({
+  queue,
+  actions,
+}: {
+  queue: AppQueue;
+  actions: Store['actions'];
+}) => {
+  const [stats, setStats] = useState<QueueStats>();
+
+  useEffect(() => {
+    let mounted = true;
+    actions.getQueueStats(queue?.name).then((stats) => {
+      mounted && setStats(stats);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const { waitTime, processingTime } = stats || {};
   const activeCount = queue.counts.active || 1;
   if (waitTime && processingTime) {
     return (

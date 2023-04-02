@@ -21,7 +21,7 @@ export const App = () => {
     <>
       <Header>
         {!!activeQueue && <QueueTitle queue={activeQueue} />}
-        {!!activeQueue && <QueueStatsCard queue={activeQueue} />}
+        {!!activeQueue && <QueueStatsCard queue={activeQueue} actions={actions} />}
         <HeaderActions />
       </Header>
       <main>

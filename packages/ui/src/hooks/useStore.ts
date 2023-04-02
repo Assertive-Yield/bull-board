@@ -138,6 +138,8 @@ export const useStore = (): Store => {
       confirmQueueActions
     );
 
+  const getQueueStats = (queueName: string) => api.getQueueStats(queueName);
+
   const getJobLogs = (queueName: string) => (job: AppJob) => () =>
     api.getJobLogs(queueName, job.id);
 
@@ -153,6 +155,7 @@ export const useStore = (): Store => {
       pauseQueue,
       resumeQueue,
       emptyQueue,
+      getQueueStats,
     },
     confirmProps,
     selectedStatuses,

@@ -121,8 +121,7 @@ export interface AppQueue {
   allowCompletedRetries: boolean;
   isPaused: boolean;
   metrics: MetricsObj | undefined;
-  stats: QueueStats | Record<string, never>;
-  workerCount: number;
+  workerCount?: number;
 }
 
 export type HTTPMethod = 'get' | 'post' | 'put';

@@ -1,3 +1,4 @@
+import { QueueStats } from '@ay-bull-board/api/dist/typings/app';
 import {
   AppJob,
   JobCleanStatus,
@@ -33,6 +34,10 @@ export class Api {
     return this.axios.get(`/queues`, {
       params: { activeQueue, status, page, jobsPerPage, search },
     });
+  }
+
+  public getQueueStats(queueName: string): Promise<QueueStats> {
+    return this.axios.get(`/queues/${encodeURIComponent(queueName)}/stats`);
   }
 
   public retryAll(queueName: string, status: JobRetryStatus): Promise<void> {

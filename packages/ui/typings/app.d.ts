@@ -3,6 +3,7 @@ import {
   AppQueue,
   JobCleanStatus,
   JobRetryStatus,
+  QueueStats,
   Status,
 } from '@ay-bull-board/api/typings/app';
 
@@ -20,4 +21,5 @@ export interface QueueActions {
   pauseQueue: (queueName: string) => () => Promise<void>;
   resumeQueue: (queueName: string) => () => Promise<void>;
   emptyQueue: (queueName: string) => () => Promise<void>;
+  getQueueStats: (queueName: string) => Promise<QueueStats>;
 }

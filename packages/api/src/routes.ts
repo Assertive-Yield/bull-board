@@ -7,6 +7,7 @@ import { jobLogsHandler } from './handlers/jobLogs';
 import { pauseQueueHandler } from './handlers/pauseQueue';
 import { promoteJobHandler } from './handlers/promotJob';
 import { purgeQueueHandler } from './handlers/purgeQueue';
+import { queueStatsHandler } from './handlers/queueStats';
 import { queuesHandler } from './handlers/queues';
 import { redisStatsHandler } from './handlers/redisStats';
 import { resumeQueueHandler } from './handlers/resumeQueue';
@@ -22,6 +23,7 @@ export const appRoutes: AppRouteDefs = {
   api: [
     { method: 'get', route: '/api/redis/stats', handler: redisStatsHandler },
     { method: 'get', route: '/api/queues', handler: queuesHandler },
+    { method: 'get', route: '/api/queues/:queueName/stats', handler: queueStatsHandler },
     {
       method: 'get',
       route: '/api/queues/:queueName/:jobId/logs',
