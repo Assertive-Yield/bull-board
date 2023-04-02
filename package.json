@@ -33,7 +33,7 @@
     "build": "lerna run build",
     "start:dev:docker": "docker-compose up -d",
     "start:dev:ui": "lerna run --scope @ay-bull-board/ui start",
-    "start:dev:server": "ts-node-dev --rs example.ts",
+    "start:dev:server": "ts-node-dev --rs example.internal.ts",
     "start:dev": "concurrently \"yarn start:dev:ui\" \"yarn start:dev:server\"",
     "test": "lerna run test",
     "clean": "lerna run clean",
