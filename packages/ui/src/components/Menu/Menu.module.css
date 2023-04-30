@@ -60,6 +60,10 @@
   border-left-color: #4abec7;
 }
 
+.menu a.failed {
+  border-left-color: red;
+}
+
 .appVersion {
   text-align: center;
 }
@@ -114,5 +118,5 @@
   display: flex;
 }
 .navLi a {
-  width: 196px;
+  width: 100%;
 }

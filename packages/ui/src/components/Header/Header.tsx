@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from 'react';
 import { useUIConfig } from '../../hooks/useUIConfig';
 import { getStaticPath } from '../../utils/getStaticPath';
 import s from './Header.module.css';
+import { Link } from 'react-router-dom';
 
 export const Header = ({ children }: PropsWithChildren<any>) => {
   const uiConfig = useUIConfig();
@@ -11,7 +12,7 @@ export const Header = ({ children }: PropsWithChildren<any>) => {
 
   return (
     <header className={s.header}>
-      <div className={s.logo}>
+      <Link to="/" className={s.logo}>
         {!!logoPath && (
           <img
             src={logoPath}
@@ -22,7 +23,7 @@ export const Header = ({ children }: PropsWithChildren<any>) => {
           />
         )}
         {boardTitle}
-      </div>
+      </Link>
       <div className={s.content}>{children}</div>
     </header>
   );

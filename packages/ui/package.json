@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@ay-bull-board/api": "5.0.0-ayFork-1.0.17",
+    "@tanstack/react-table": "^8.8.5",
     "simplebar-react": "^2.3.6"
   },
   "devDependencies": {
