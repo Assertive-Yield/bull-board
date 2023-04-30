@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/root",
-  "version": "5.0.0-ayFork-1.0.18",
+  "version": "5.0.0-ayFork-1.0.19",
   "private": true,
   "description": "Bull queue UI for inspecting jobs",
   "keywords": [

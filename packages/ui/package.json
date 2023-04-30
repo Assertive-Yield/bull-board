@@ -1,6 +1,6 @@
 {
   "name": "@ay-bull-board/ui",
-  "version": "5.0.0-ayFork-1.0.18",
+  "version": "5.0.0-ayFork-1.0.19",
   "description": "Bull-Board's UI package",
   "keywords": [
     "bull",
@@ -27,7 +27,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ay-bull-board/api": "5.0.0-ayFork-1.0.18",
+    "@ay-bull-board/api": "5.0.0-ayFork-1.0.19",
     "@tanstack/react-table": "^8.8.5",
     "simplebar-react": "^2.3.6"
   },
