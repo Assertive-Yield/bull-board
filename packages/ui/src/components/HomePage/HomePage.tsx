@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CellContext,
   SortingState,
   createColumnHelper,
   flexRender,
@@ -7,35 +8,51 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { AppQueue } from '@ay-bull-board/api/typings/app';
+import { AppQueue, Status } from '@ay-bull-board/api/typings/app';
 import s from './HomePage.module.css';
 import { Link } from 'react-router-dom';
+
+const QueueLink = ({ info }: { info: CellContext<AppQueue, string | number> }) => {
+  const columnId = info.column.id;
+  const status = (
+    columnId && columnId.startsWith('counts_') ? columnId.replace('counts_', '') : 'latest'
+  ) as Status;
+  return (
+    <Link
+      className={s.fullWidth}
+      to={`/queue/${encodeURIComponent(info.row.original?.name)}?status=${status}`}
+    >
+      {info.getValue()}
+    </Link>
+  );
+};
 
 export const HomePage = ({ queues }: { queues: AppQueue[] | undefined }) => {
   const columnHelper = createColumnHelper<AppQueue>();
   const columns = [
     columnHelper.accessor('name', {
       header: () => <span>Name</span>,
-      cell: (info) => (
-        <Link className={s.fullWidth} to={`/queue/${encodeURIComponent(info.getValue())}`}>
-          {info.getValue()}
-        </Link>
-      ),
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('counts.failed', {
       header: () => <span>Failed</span>,
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('counts.waiting', {
       header: () => <span>Waiting</span>,
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('counts.delayed', {
       header: () => <span>Delayed</span>,
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('counts.active', {
       header: () => <span>Active</span>,
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('counts.paused', {
       header: () => <span>Paused</span>,
+      cell: (info) => <QueueLink info={info} />,
     }),
     columnHelper.accessor('isPaused', {
       header: () => <span>Is Paused</span>,
@@ -70,10 +87,6 @@ export const HomePage = ({ queues }: { queues: AppQueue[] | undefined }) => {
                       }}
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
-                      {/* {{
-                        asc: ' 🔼',
-                        desc: ' 🔽',
-                      }[header.column.getIsSorted() as string] ?? null} */}
                     </div>
                   )}
                 </th>
@@ -106,10 +119,6 @@ export const HomePage = ({ queues }: { queues: AppQueue[] | undefined }) => {
           ))}
         </tfoot>
       </table>
-      <div className="h-4" />
-      {/* <button onClick={() => rerender()} className="border p-2">
-        Rerender
-      </button> */}
     </div>
   );
 };
