@@ -58,7 +58,16 @@ export const HomePage = ({ queues }: { queues: AppQueue[] | undefined }) => {
       header: () => <span>Is Paused</span>,
     }),
   ];
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "counts_failed",
+      desc: true
+    },
+    {
+      id: "counts_waiting",
+      desc: true
+    }
+  ]);
 
   const table = useReactTable({
     data: queues || [],
