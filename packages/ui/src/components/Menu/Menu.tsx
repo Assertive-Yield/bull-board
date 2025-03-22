@@ -1,11 +1,15 @@
 import { AppQueue } from '@ay-bull-board/api/typings/app';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import cn from 'clsx';
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { STATUS_LIST } from '../../constants/status-list';
 import { Store } from '../../hooks/useStore';
-// import { QueueStatus } from './QueueStatus';
-import { SearchIcon } from '../Icons/Search';
+import { 
+  processQueues, 
+  extractCurrentQueueNameFromPath
+} from './QueueHelpers';
+import { SearchBar } from './components/SearchBar';
+import { QueueGroup } from './components/QueueGroup';
+import { OtherQueueGroup } from './components/OtherQueueGroup';
 import s from './Menu.module.css';
 
 export const Menu = ({
@@ -16,45 +20,85 @@ export const Menu = ({
   selectedStatuses: Store['selectedStatuses'];
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const [otherQueuesExpanded, setOtherQueuesExpanded] = useState(true);
+  const history = useHistory();
+  const location = useLocation();
+
+  // Get the current active queue name from the URL
+  const currentQueueName = useMemo(() => 
+    extractCurrentQueueNameFromPath(location.pathname), 
+    [location.pathname]
+  );
+
+  // Process queues to identify scheduler and worker relationships
+  const { queueGroups, ungroupedQueues, hasUngroupedFailed, queueRelationships } = useMemo(() => 
+    processQueues(queues, searchTerm),
+    [queues, searchTerm]
+  );
+
+  // Toggle a group's expanded state
+  const toggleGroup = useCallback((groupName: string) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [groupName]: !prev[groupName]
+    }));
+  }, []);
+
+  // Toggle the other queues expanded state
+  const toggleOtherQueues = useCallback(() => {
+    setOtherQueuesExpanded(prev => !prev);
+  }, []);
+
+  // Navigate to queue
+  const navigateToQueue = useCallback((queueName: string) => {
+    history.push(`/queue/${encodeURIComponent(queueName)}`);
+  }, [history]);
+
   return (
     <aside className={s.aside}>
       <div className={s.secondary}>QUEUES</div>
 
       {(queues?.length || 0) > 5 && (
-        <div className={s.searchWrapper}>
-          <SearchIcon />
-          <input
-            className={s.search}
-            type="search"
-            id="search-queues"
-            placeholder="Filter queues"
-            value={searchTerm}
-            onChange={({ currentTarget }) => setSearchTerm(currentTarget.value)}
-          />
-        </div>
+        <SearchBar
+          value={searchTerm}
+          onChange={setSearchTerm}
+        />
       )}
       <nav>
         {!!queues && (
           <ul className={s.menu}>
-            {queues
-              .filter(({ name }) => name?.toLowerCase().includes(searchTerm?.toLowerCase()))
-              .map(({ name: queueName, isPaused, counts }) => (
-                <li key={queueName} className={s.navLi}>
-                  {/* <QueueStatus counts={counts} /> */}
-                  <NavLink
-                    to={`/queue/${encodeURIComponent(queueName)}${
-                      !selectedStatuses[queueName] || selectedStatuses[queueName] === STATUS_LIST[0]
-                        ? ''
-                        : `?status=${selectedStatuses[queueName]}`
-                    }`}
-                    activeClassName={s.active}
-                    title={queueName}
-                    className={counts.failed > 0 ? s.failed : ''}
-                  >
-                    {queueName} {isPaused && <span className={s.isPaused}>[ Paused ]</span>}
-                  </NavLink>
-                </li>
-              ))}
+            {/* Queue Groups */}
+            {queueGroups.map(group => (
+              <QueueGroup
+                key={group.name}
+                name={group.name}
+                queues={group.queues}
+                hasFailed={group.hasFailed}
+                isExpanded={!!expandedGroups[group.name]}
+                onToggle={() => toggleGroup(group.name)}
+                currentQueueName={currentQueueName}
+                queueRelationships={queueRelationships}
+                selectedStatuses={selectedStatuses}
+                allQueues={queues}
+                navigateToQueue={navigateToQueue}
+              />
+            ))}
+
+            {/* Ungrouped Queues */}
+            {ungroupedQueues.length > 0 && (
+              <OtherQueueGroup
+                queues={ungroupedQueues}
+                hasFailed={hasUngroupedFailed}
+                isExpanded={otherQueuesExpanded}
+                onToggle={toggleOtherQueues}
+                currentQueueName={currentQueueName}
+                queueRelationships={queueRelationships}
+                selectedStatuses={selectedStatuses}
+                allQueues={queues}
+                navigateToQueue={navigateToQueue}
+              />
+            )}
           </ul>
         )}
       </nav>
