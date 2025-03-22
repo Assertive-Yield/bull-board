@@ -78,7 +78,7 @@
     "plugins": {
       "release-it-yarn-workspaces": {
         "publish": true,
-        "skipChecks": true
+        "skipChecks": false
       }
     },
     "git": {
