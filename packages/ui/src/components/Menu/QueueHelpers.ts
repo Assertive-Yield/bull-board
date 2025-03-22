@@ -138,7 +138,7 @@ export const getQueueStatusInfo = (
  */
 export const processQueues = (
   queues: AppQueue[] | undefined, 
-  searchTerm: string = ''
+  searchTerm = ''
 ): ProcessedQueueData => {
   if (!queues) {
     return { 
@@ -300,13 +300,20 @@ export const getActiveQueueTypes = (
   const workerQueue = isScheduler ? queueRelationships.schedulerToWorker[queueName] : null;
   const schedulerQueue = !isScheduler ? queueRelationships.workerToScheduler[queueName] : null;
   
-  const isRelatedQueueActive = (workerQueue && currentQueueName === workerQueue) || 
-                             (schedulerQueue && currentQueueName === schedulerQueue);
+  // Check if the related queue is currently active (if it exists and matches current view)
+  const isRelatedQueueActive = 
+    (workerQueue && currentQueueName === workerQueue) || 
+    (schedulerQueue && currentQueueName === schedulerQueue);
   
+  // Determine if worker is active - either this is a worker queue that is active,
+  // or the related worker queue to this scheduler is active
   const isWorkerActive = isCurrentQueue ? !isScheduler : 
-                        (isRelatedQueueActive && !isSchedulerQueue(currentQueueName!));
+                        (isRelatedQueueActive && currentQueueName && !isSchedulerQueue(currentQueueName));
+  
+  // Determine if scheduler is active - either this is a scheduler queue that is active,
+  // or the related scheduler queue to this worker is active
   const isSchedulerActive = isCurrentQueue ? isScheduler : 
-                           (isRelatedQueueActive && isSchedulerQueue(currentQueueName!));
+                           (isRelatedQueueActive && currentQueueName && isSchedulerQueue(currentQueueName));
   
   return {
     isWorkerActive,
