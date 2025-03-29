@@ -21,7 +21,7 @@ export const Menu = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
-  const [otherQueuesExpanded, setOtherQueuesExpanded] = useState(true);
+  const [otherQueuesExpanded, setOtherQueuesExpanded] = useState(false);
   const history = useHistory();
   const location = useLocation();
 
