@@ -7,3 +7,4 @@ website/build
 docker-compose.dockest-generated.yml
 dockest-error.json
 queueNames.json
+.env
