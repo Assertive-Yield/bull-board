@@ -1,11 +1,12 @@
+import { QueueStats } from '@ay-bull-board/api/dist/typings/app';
 import {
   AppJob,
   JobCleanStatus,
   JobRetryStatus,
   RedisStats,
   Status,
-} from '@bull-board/api/typings/app';
-import { GetQueuesResponse } from '@bull-board/api/typings/responses';
+} from '@ay-bull-board/api/typings/app';
+import { GetQueuesResponse } from '@ay-bull-board/api/typings/responses';
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 
@@ -22,13 +23,21 @@ export class Api {
     status,
     page,
     jobsPerPage,
+    search,
   }: {
     activeQueue?: string;
     status?: Status;
     page: string;
     jobsPerPage: number;
+    search?: string;
   }): Promise<GetQueuesResponse> {
-    return this.axios.get(`/queues`, { params: { activeQueue, status, page, jobsPerPage } });
+    return this.axios.get(`/queues`, {
+      params: { activeQueue, status, page, jobsPerPage, search },
+    });
+  }
+
+  public getQueueStats(queueName: string): Promise<QueueStats> {
+    return this.axios.get(`/queues/${encodeURIComponent(queueName)}/stats`);
   }
 
   public retryAll(queueName: string, status: JobRetryStatus): Promise<void> {
@@ -41,6 +50,10 @@ export class Api {
     return this.axios.put(
       `/queues/${encodeURIComponent(queueName)}/clean/${encodeURIComponent(status)}`
     );
+  }
+
+  public purgeQueue(queueName: string): Promise<void> {
+    return this.axios.put(`/queues/${encodeURIComponent(queueName)}/purge`);
   }
 
   public cleanJob(queueName: string, jobId: AppJob['id']): Promise<void> {

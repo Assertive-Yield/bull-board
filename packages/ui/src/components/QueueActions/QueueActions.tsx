@@ -1,5 +1,5 @@
-import { STATUSES } from '@bull-board/api/src/constants/statuses';
-import { AppQueue, JobCleanStatus, JobRetryStatus, Status } from '@bull-board/api/typings/app';
+import { STATUSES } from '@ay-bull-board/api/src/constants/statuses';
+import { AppQueue, JobCleanStatus, JobRetryStatus, Status } from '@ay-bull-board/api/typings/app';
 import React from 'react';
 import { Store } from '../../hooks/useStore';
 import { RetryIcon } from '../Icons/Retry';

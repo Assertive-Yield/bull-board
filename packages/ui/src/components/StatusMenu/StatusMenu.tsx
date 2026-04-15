@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import s from './StatusMenu.module.css';
-import { AppQueue } from '@bull-board/api/typings/app';
+import { AppQueue } from '@ay-bull-board/api/typings/app';
 import { STATUS_LIST } from '../../constants/status-list';
-import { STATUSES } from '@bull-board/api/src/constants/statuses';
+import { STATUSES } from '@ay-bull-board/api/src/constants/statuses';
 import { Store } from '../../hooks/useStore';
 import { QueueDropdownActions } from '../QueueDropdownActions/QueueDropdownActions';
 

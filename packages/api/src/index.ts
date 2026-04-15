@@ -15,7 +15,7 @@ export function createBullBoard({
   options?: BoardOptions;
 }) {
   const { bullBoardQueues, setQueues, replaceQueues, addQueue, removeQueue } = getQueuesApi(queues);
-  const uiBasePath = path.dirname(eval(`require.resolve('@bull-board/ui/package.json')`));
+  const uiBasePath = path.dirname(eval(`require.resolve('@ay-bull-board/ui/package.json')`));
 
   serverAdapter
     .setQueues(bullBoardQueues)

@@ -2,6 +2,32 @@
 # yarn lockfile v1
 
 
+<<<<<<< HEAD
+"@ay-bull-board/api@3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/api/-/api-3.5.4.tgz#da294f5243d38565dc9ad1048bc95e37999e1e4b"
+  integrity sha512-72VfXh9OHGJZHNjBpCDLJ5aEKkkXPqe3a67N4yNok2PNSx2YIokGaMmwZuFh7CLWrhTSfXwly1b+yQMZ5qcQdA==
+  dependencies:
+    redis-info "^3.0.8"
+
+"@ay-bull-board/fastify@^3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/fastify/-/fastify-3.5.4.tgz#22dab17d30bf62f2cc014edae228a49cf66aa90d"
+  integrity sha512-+DY3g02xpS/432F7PY0orDIEWKkSCYmPLr31q/VbdQcrd3cxWI6Woc8W5jLs/n45E39qANwPcMiacwu9yHefCg==
+  dependencies:
+    "@ay-bull-board/api" "3.5.4"
+    "@ay-bull-board/ui" "3.5.4"
+    ejs "^3.1.6"
+    fastify-static "^4.2.2"
+    point-of-view "^4.14.0"
+
+"@ay-bull-board/ui@3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@ay-bull-board/ui/-/ui-3.5.4.tgz#1806873b09ec0b176e981e676855b190012b7570"
+  integrity sha512-IcqodCD2X4erKc13TQ6TjGpQ6sU8aza0do3BeEieu4CN9kDw4a4pz8ChcXpLn0CXDmAO7ZEmZdPEFii5c9iVaw==
+  dependencies:
+    "@ay-bull-board/api" "3.5.4"
+=======
 "@bull-board/api@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@bull-board/api/-/api-4.2.1.tgz#40cbc183d7738bac81f09a6d1d1ed7f6bafcfd58"
@@ -58,6 +84,7 @@
     cookie "^0.5.0"
     cookie-signature "^1.1.0"
     fastify-plugin "^4.0.0"
+>>>>>>> upstream/master
 
 "@fastify/deepmerge@^1.0.0":
   version "1.1.0"

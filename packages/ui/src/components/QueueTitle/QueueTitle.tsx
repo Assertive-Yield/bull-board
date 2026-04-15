@@ -1,4 +1,4 @@
-import { AppQueue } from '@bull-board/api/typings/app';
+import { AppQueue } from '@ay-bull-board/api/typings/app';
 import React from 'react';
 import s from './QueueTitle.module.css';
 

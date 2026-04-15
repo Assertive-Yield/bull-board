@@ -3,7 +3,9 @@ import { useDetailsTabs } from '../../../hooks/useDetailsTabs';
 import { Button } from '../Button/Button';
 import s from './Details.module.css';
 import { DetailsContent } from './DetailsContent/DetailsContent';
-import { AppJob, Status } from '@bull-board/api/typings/app';
+import { AppJob, Status } from '@ay-bull-board/api/typings/app';
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
 interface DetailsProps {
   job: AppJob;
@@ -30,7 +32,9 @@ export const Details = ({ status, job, actions }: DetailsProps) => {
         ))}
       </ul>
       <div className={s.tabContent}>
-        <DetailsContent selectedTab={selectedTab} job={job} actions={actions} />
+        <SimpleBar>
+          <DetailsContent selectedTab={selectedTab} job={job} actions={actions} />
+        </SimpleBar>
       </div>
     </div>
   );

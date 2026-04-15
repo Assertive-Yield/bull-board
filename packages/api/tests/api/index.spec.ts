@@ -1,9 +1,9 @@
 import { Queue } from 'bullmq';
 import request from 'supertest';
 
-import { createBullBoard } from '@bull-board/api';
-import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
-import { ExpressAdapter } from '@bull-board/express';
+import { createBullBoard } from '@ay-bull-board/api';
+import { BullMQAdapter } from '@ay-bull-board/api/bullMQAdapter';
+import { ExpressAdapter } from '@ay-bull-board/express';
 
 describe('happy', () => {
   let serverAdapter: ExpressAdapter;

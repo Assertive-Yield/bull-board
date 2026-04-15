@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useActiveQueue } from '../hooks/useActiveQueue';
 import { useScrollTopOnNav } from '../hooks/useScrollTopOnNav';
@@ -9,7 +9,9 @@ import { Header } from './Header/Header';
 import { HeaderActions } from './HeaderActions/HeaderActions';
 import { Menu } from './Menu/Menu';
 import { QueuePage } from './QueuePage/QueuePage';
+import { QueueStatsCard } from './QueueStats/QueueStats';
 import { QueueTitle } from './QueueTitle/QueueTitle';
+import { HomePage } from './HomePage/HomePage';
 
 export const App = () => {
   useScrollTopOnNav();
@@ -19,7 +21,8 @@ export const App = () => {
   return (
     <>
       <Header>
-        <QueueTitle queue={activeQueue} />
+        {!!activeQueue && <QueueTitle queue={activeQueue} />}
+        {!!activeQueue && <QueueStatsCard queue={activeQueue} actions={actions} />}
         <HeaderActions />
       </Header>
       <main>
@@ -41,11 +44,12 @@ export const App = () => {
                 />
 
                 <Route path="/" exact>
-                  {!!state.data &&
+                  <HomePage queues={state.data?.queues} />
+                  {/* {!!state.data &&
                     Array.isArray(state.data?.queues) &&
                     state.data.queues.length > 0 && (
                       <Redirect to={`/queue/${encodeURIComponent(state.data?.queues[0].name)}`} />
-                    )}
+                    )} */}
                 </Route>
               </Switch>
               <ConfirmModal {...confirmProps} />

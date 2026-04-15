@@ -1,0 +1,148 @@
+.container {
+  background-color: #fff;
+  box-shadow: 0 1px 1px 0 rgba(60, 75, 100, 0.14), 0 2px 1px -1px rgba(60, 75, 100, 0.12),
+    0 1px 3px 0 rgba(60, 75, 100, 0.2);
+  border-radius: 0.25rem;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.summaryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.summaryCard {
+  flex: 1;
+  min-width: 180px;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.summaryHeading {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.summaryValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summaryFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summaryBadge {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.badgeQueues {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.badgeFailed {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fee2e2;
+}
+
+.badgeWaiting {
+  background-color: #f0f9ff;
+  color: #0c4a6e;
+  border: 1px solid #bae6fd;
+}
+
+.badgeDelayed {
+  background-color: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fef3c7;
+}
+
+.badgeActive {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #d1fae5;
+}
+
+.badgeZero {
+  background-color: #f9fafb;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.th {
+  cursor: pointer;
+}
+
+.td,
+.th {
+  padding: 0.6em;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.td a {
+  color: #454b52;
+  text-decoration: none;
+}
+
+.fullWidth {
+  width: 100%;
+  display: block;
+}
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.paused {
+  background-color: #feecdc;
+  color: #9a3412;
+}
+
+.active {
+  background-color: #dcfce7;
+  color: #166534;
+}

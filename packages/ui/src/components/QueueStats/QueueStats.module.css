@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  width: 820px;
+  text-align: center;
+}
+.card {
+  padding: 1em;
+  font-weight: 300;
+  font-size: small;
+}
+
+.card:first-child {
+  border-right: 1px solid #e6e7e8;
+}
+.card:last-child {
+  border-left: 1px solid #e6e7e8;
+}
+
+.card h3 {
+  color: rgb(69, 75, 82);
+  margin-bottom: 0.25em;
+}
+
+.card:first-child {
+  margin-left: 0;
+}
+.card:nth-child(2n) {
+  flex: none;
+}
+.card:last-child {
+  margin-right: 0;
+}
+
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.card thead {
+  color: rgb(160, 174, 192);
+}

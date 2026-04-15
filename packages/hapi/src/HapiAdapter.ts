@@ -5,7 +5,7 @@ import {
   ControllerHandlerReturnType,
   IServerAdapter,
   UIConfig,
-} from '@bull-board/api/dist/typings/app';
+} from '@ay-bull-board/api/dist/typings/app';
 import { PluginBase, PluginPackage } from '@hapi/hapi';
 import Vision from '@hapi/vision';
 import Inert from '@hapi/inert';

@@ -60,15 +60,46 @@
   border-left-color: #4abec7;
 }
 
+.menu a.failed {
+  border-left-color: red;
+}
+
 .appVersion {
   text-align: center;
 }
 
+.queueSwitcherContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 0.35rem;
+  gap: 0.5rem;
+}
+
 .isPaused {
-  color: #828e97;
-  font-size: 0.833em;
-  display: block;
-  margin-bottom: -0.75em;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 0.3rem 0.5rem;
+  border-radius: 2px;
+  background-color: rgba(255, 190, 61, 0.1);
+  color: #ffbe3d;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  position: absolute;
+  right: 1rem;
+  margin-top: 0.3rem;
+}
+
+.isPaused::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: #ffbe3d;
+  border-radius: 50%;
+  margin-right: 0.2rem;
 }
 
 .searchWrapper {
@@ -108,4 +139,250 @@
 .search.search:active {
   border: 2px solid #4abec7;
   outline: 0;
+}
+
+.navLi {
+  display: flex;
+}
+.navLi a {
+  width: 100%;
+}
+
+.queueGroup {
+  border-top: 1px solid #3a4145;
+}
+
+.groupHeader {
+  cursor: pointer;
+  padding: 0.9rem 0.5rem 0.9rem 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #a7b2bd;
+  transition: color 120ms ease-in-out, background-color 120ms ease-in-out;
+  user-select: none;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.groupHeader:hover {
+  color: #f5f8fa;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.groupHeader.failed {
+  border-left-color: red;
+}
+
+.groupHeader.expanded {
+  color: #f5f8fa;
+  background-color: rgba(74, 190, 199, 0.05);
+}
+
+.groupHeader .groupName {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.groupHeader .expandIcon {
+  margin-left: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 200ms ease-in-out;
+}
+
+.groupHeader.expanded .expandIcon {
+  transform: rotate(90deg);
+}
+
+.groupItems {
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: height 300ms ease-out, opacity 200ms ease-out, transform 200ms ease-out;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.groupItems.expanded {
+  height: auto;
+  opacity: 1;
+  transform: translateY(0);
+  transition: height 300ms ease-in, opacity 250ms ease-in, transform 250ms ease-in;
+}
+
+.groupItems li {
+  border-top: none !important;
+}
+
+.groupItems .navLi a {
+  padding: 0.8rem 1.25rem;
+  font-size: 0.9em;
+  color: #b9c1c8;
+  border-left: 3px solid transparent;
+  background-color: transparent;
+  transition: background-color 100ms ease-in, color 100ms ease-in, border-left-color 100ms ease-in;
+}
+
+.groupItems .navLi a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #f5f8fa;
+}
+
+.groupItems .navLi a.active {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #f5f8fa;
+  border-left-color: #4abec7;
+}
+
+.groupItems .navLi a.failed {
+  border-left-color: red;
+}
+
+.groupItems .navLi:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.025);
+}
+
+.schedulerQueue {
+  position: relative;
+}
+
+.queueSwitcher {
+  display: flex;
+  align-items: center;
+  margin-top: 0.35rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: fit-content;
+  position: relative;
+}
+
+.queueSwitcher::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  border-radius: 0.25rem;
+  pointer-events: none;
+}
+
+.queueSwitcherOption {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: #a7b2bd;
+  transition: all 150ms ease;
+  position: relative;
+  z-index: 1;
+}
+
+.queueSwitcherOption.active {
+  background-color: rgba(74, 190, 199, 0.2);
+  color: #4abec7;
+}
+
+.queueSwitcherOption:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #d5d9dc;
+}
+
+.queueSwitcherOption:first-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.queueSwitcherOption.paused::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: #ffbe3d;
+  border-radius: 50%;
+  margin-left: 0.3rem;
+  position: relative;
+  top: -1px;
+}
+
+.queueSwitcherOption.failed::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: #ff4d4f;
+  border-radius: 50%;
+  margin-left: 0.3rem;
+  position: relative;
+  top: -1px;
+}
+
+.queueSwitcherOption.failed.paused::after {
+  background: linear-gradient(to right, #ff4d4f 50%, #ffbe3d 50%);
+}
+
+.schedulerBadge {
+  position: absolute;
+  left: 0.25rem;
+  top: 0.75rem;
+  font-size: 0.65em;
+  color: #a7b2bd;
+  background-color: rgba(74, 190, 199, 0.1);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  opacity: 0.8;
+}
+
+.queueLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.relatedQueues {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.relatedWorker {
+  color: #4abec7;
+  background-color: rgba(74, 190, 199, 0.1);
+  border: 1px solid rgba(74, 190, 199, 0.2);
+  font-size: 0.65em;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.relatedWorker:hover {
+  background-color: rgba(74, 190, 199, 0.2);
+}
+
+.groupBadge {
+  background-color: rgba(74, 190, 199, 0.2);
+  color: #4abec7;
+  font-size: 0.7em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
+}
+
+.ungroupedQueue {
+  margin-top: 1rem;
 }

@@ -5,6 +5,7 @@ import {
   ControllerHandlerReturnType,
   JobCounts,
   JobStatus,
+  MetricsObj,
   Pagination,
   QueueJob,
   Status,
@@ -76,14 +77,28 @@ async function getAppQueues(
       const status =
         !isActiveQueue || query.status === 'latest' ? allStatuses : [query.status as JobStatus];
       const currentPage = +query.page || 1;
+      const search = query.search || '';
 
       const counts = await queue.getJobCounts(...allStatuses);
       const isPaused = await queue.isPaused();
 
       const pagination = getPagination(status, counts, currentPage, jobsPerPage);
       const jobs = isActiveQueue
-        ? await queue.getJobs(status, pagination.range.start, pagination.range.end)
+        ? await queue.getJobsSearch(status, pagination.range.start, pagination.range.end, search)
         : [];
+      const jobsJson = jobs.filter(Boolean).map((job) => formatJob(job, queue));
+
+      const metrics = {
+        completed: await queue.getMetrics('completed'),
+        failed: await queue.getMetrics('failed'),
+      };
+
+      // disabled due to slow lookup
+      // will fail in test since client is not mocked in ioredis-mock
+      // let workers = [];
+      // try {
+      //   workers = await queue.getWorkers();
+      // } catch (e) {}
 
       const description = queue.getDescription() || undefined;
 
@@ -91,12 +106,14 @@ async function getAppQueues(
         name: queueName,
         description,
         counts: counts as Record<Status, number>,
-        jobs: jobs.filter(Boolean).map((job) => formatJob(job, queue)),
+        metrics: metrics as MetricsObj,
+        jobs: jobsJson,
         pagination,
         readOnlyMode: queue.readOnlyMode,
         allowRetries: queue.allowRetries,
         allowCompletedRetries: queue.allowCompletedRetries,
         isPaused,
+        // workerCount: Array.isArray(workers) ? workers.length : 0,
       };
     })
   );

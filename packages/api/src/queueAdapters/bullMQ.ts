@@ -1,4 +1,4 @@
-import { Job, Queue } from 'bullmq';
+import { Job, Metrics, Queue } from 'bullmq';
 import { JobCleanStatus, JobCounts, JobStatus, QueueAdapterOptions } from '../../typings/app';
 import { BaseAdapter } from './base';
 
@@ -18,8 +18,20 @@ export class BullMQAdapter extends BaseAdapter {
     return `${this.prefix}${this.queue.name}`;
   }
 
+  public getMetrics(type: 'completed' | 'failed'): Promise<Metrics | undefined> {
+    return this.queue.getMetrics(type);
+  }
+
+  public getWorkers(): Promise<Array<any>> {
+    return this.queue.getWorkers();
+  }
+
   public clean(jobStatus: JobCleanStatus, graceTimeMs: number): Promise<void> {
     return this.queue.clean(graceTimeMs, this.LIMIT, jobStatus).then(() => undefined);
+  }
+
+  public purge(): Promise<void> {
+    return this.queue.obliterate({ force: true }).then(() => undefined);
   }
 
   public getJob(id: string): Promise<Job | undefined> {
@@ -28,6 +40,24 @@ export class BullMQAdapter extends BaseAdapter {
 
   public getJobs(jobStatuses: JobStatus[], start?: number, end?: number): Promise<Job[]> {
     return this.queue.getJobs(jobStatuses, start, end);
+  }
+
+  public async getJobsSearch(
+    jobStatuses: JobStatus[],
+    start?: number,
+    end?: number,
+    search?: string
+  ): Promise<Job[]> {
+    if (!search) {
+      return this.getJobs(jobStatuses, start, end);
+    }
+    const jobIds = await this.queue.getRanges(jobStatuses, 0, -1);
+    return Promise.all(
+      jobIds
+        .filter((jobId) => jobId.includes(search))
+        .slice(start, end)
+        .map((jobId) => this.getJob(jobId) as Promise<Job>)
+    );
   }
 
   public getJobCounts(...jobStatuses: JobStatus[]): Promise<JobCounts> {

@@ -1,4 +1,4 @@
-import { AppQueue } from '@bull-board/api/dist/typings/app';
+import { AppQueue } from '@ay-bull-board/api/dist/typings/app';
 import { useActiveQueueName } from './useActiveQueueName';
 import { Store } from './useStore';
 

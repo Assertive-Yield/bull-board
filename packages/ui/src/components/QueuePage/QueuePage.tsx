@@ -4,8 +4,9 @@ import { JobCard } from '../JobCard/JobCard';
 import { QueueActions } from '../QueueActions/QueueActions';
 import { StatusMenu } from '../StatusMenu/StatusMenu';
 import s from './QueuePage.module.css';
-import { AppQueue, JobRetryStatus } from '@bull-board/api/typings/app';
+import { AppQueue, JobRetryStatus } from '@ay-bull-board/api/typings/app';
 import { Pagination } from '../Pagination/Pagination';
+import { QueueSearch } from '../QueueSearch/QueueSearch';
 
 export const QueuePage = ({
   selectedStatus,
@@ -23,11 +24,12 @@ export const QueuePage = ({
   const status = selectedStatus[queue.name];
 
   return (
-    <section>
+    <>
       <div className={s.stickyHeader}>
         <StatusMenu queue={queue} actions={actions} />
         <div className={s.actionContainer}>
-          <div>
+          <div className={s.flex}>
+            <QueueSearch />
             {queue.jobs.length > 0 && !queue.readOnlyMode && (
               <QueueActions
                 queue={queue}
@@ -58,6 +60,6 @@ export const QueuePage = ({
           allowRetries={(job.isFailed || queue.allowCompletedRetries) && queue?.allowRetries}
         />
       ))}
-    </section>
+    </>
   );
 };

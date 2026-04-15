@@ -1,5 +1,6 @@
 import { RedisInfo } from 'redis-info';
 import { STATUSES } from '../src/constants/statuses';
+import { Metrics } from 'bullmq';
 import { BaseAdapter } from '../src/queueAdapters/base';
 
 export type JobCleanStatus = 'completed' | 'wait' | 'active' | 'delayed' | 'failed';
@@ -89,6 +90,26 @@ export interface AppJob {
   isFailed: boolean;
 }
 
+export interface QueueStats {
+  waitTime: {
+    avg: number;
+    p05: number;
+    p50: number;
+    p95: number;
+  };
+  processingTime: {
+    avg: number;
+    p05: number;
+    p50: number;
+    p95: number;
+  };
+}
+
+export interface MetricsObj {
+  failed: Metrics;
+  completed: Metrics;
+}
+
 export interface AppQueue {
   name: string;
   description?: string;
@@ -99,6 +120,8 @@ export interface AppQueue {
   allowRetries: boolean;
   allowCompletedRetries: boolean;
   isPaused: boolean;
+  metrics: MetricsObj | undefined;
+  workerCount?: number;
 }
 
 export type HTTPMethod = 'get' | 'post' | 'put';

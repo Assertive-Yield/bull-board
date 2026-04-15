@@ -1,5 +1,5 @@
-import { AppJob, JobCleanStatus, JobRetryStatus } from '@bull-board/api/typings/app';
-import { GetQueuesResponse } from '@bull-board/api/typings/responses';
+import { GetQueuesResponse } from '@ay-bull-board/api/typings/responses';
+import { AppJob, JobCleanStatus, JobRetryStatus } from '@ay-bull-board/api/typings/app';
 import { useState } from 'react';
 import { QueueActions, SelectedStatuses } from '../../typings/app';
 import { useActiveQueueName } from './useActiveQueueName';
@@ -51,6 +51,7 @@ export const useStore = (): Store => {
         status: activeQueueName ? selectedStatuses[activeQueueName] : undefined,
         page: query.get('page') || '1',
         jobsPerPage,
+        search: query.get('search') || '',
       })
       .then((data) => {
         setState({ data, loading: false });
@@ -137,6 +138,8 @@ export const useStore = (): Store => {
       confirmQueueActions
     );
 
+  const getQueueStats = (queueName: string) => api.getQueueStats(queueName);
+
   const getJobLogs = (queueName: string) => (job: AppJob) => () =>
     api.getJobLogs(queueName, job.id);
 
@@ -152,6 +155,7 @@ export const useStore = (): Store => {
       pauseQueue,
       resumeQueue,
       emptyQueue,
+      getQueueStats,
     },
     confirmProps,
     selectedStatuses,

@@ -3,10 +3,11 @@ import {
   AppQueue,
   JobCleanStatus,
   JobRetryStatus,
+  QueueStats,
   Status,
-} from '@bull-board/api/typings/app';
+} from '@ay-bull-board/api/typings/app';
 
-export { Status } from '@bull-board/api/typings/app';
+export { Status } from '@ay-bull-board/api/typings/app';
 
 export type SelectedStatuses = Record<AppQueue['name'], Status>;
 
@@ -20,4 +21,5 @@ export interface QueueActions {
   pauseQueue: (queueName: string) => () => Promise<void>;
   resumeQueue: (queueName: string) => () => Promise<void>;
   emptyQueue: (queueName: string) => () => Promise<void>;
+  getQueueStats: (queueName: string) => Promise<QueueStats>;
 }

@@ -1,4 +1,4 @@
-import { AppJob } from '@bull-board/api/typings/app';
+import { AppJob } from '@ay-bull-board/api/typings/app';
 import React, { useState } from 'react';
 import { TabsType } from '../../../../hooks/useDetailsTabs';
 import { useSettingsStore } from '../../../../hooks/useSettings';

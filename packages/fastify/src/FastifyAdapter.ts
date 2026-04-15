@@ -5,7 +5,7 @@ import {
   ControllerHandlerReturnType,
   IServerAdapter,
   UIConfig,
-} from '@bull-board/api/dist/typings/app';
+} from '@ay-bull-board/api/dist/typings/app';
 
 import fastifyStatic from '@fastify/static';
 import pointOfView from '@fastify/view';

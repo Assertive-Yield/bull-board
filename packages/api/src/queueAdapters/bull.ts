@@ -15,8 +15,21 @@ export class BullAdapter extends BaseAdapter {
     return `${this.prefix}${this.queue.name}`;
   }
 
+  public getMetrics(): Promise<undefined> {
+    // not implemented/supported
+    return Promise.resolve(undefined);
+  }
+
+  public getWorkers(): Promise<Array<any>> {
+    return this.queue.getWorkers();
+  }
+
   public clean(jobStatus: JobCleanStatus, graceTimeMs: number): Promise<any> {
     return this.queue.clean(graceTimeMs, jobStatus as any);
+  }
+
+  public purge(): Promise<any> {
+    return this.queue.obliterate({ force: true });
   }
 
   public getJob(id: string): Promise<Job | undefined | null> {
@@ -37,6 +50,28 @@ export class BullAdapter extends BaseAdapter {
 
         return job;
       })
+    );
+  }
+
+  // NOT IMPLEMENTED
+  public async getJobsSearch(
+    jobStatuses: JobStatus[],
+    start?: number,
+    end?: number,
+    search?: string
+  ): Promise<Job[]> {
+    if (!search) return this.getJobs(jobStatuses, start, end);
+
+    return this.queue.getJobs(jobStatuses, 0, -1).then((jobs) =>
+      jobs
+        .filter((job) => job.name.includes(search))
+        .slice(start, end)
+        .map((job) => {
+          if (typeof job?.attemptsMade === 'number') {
+            job.attemptsMade++; // increase to align it with bullMQ behavior
+          }
+          return job;
+        })
     );
   }
 
